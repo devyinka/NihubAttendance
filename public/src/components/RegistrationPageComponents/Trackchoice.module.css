@@ -1,0 +1,25 @@
+.title{
+ color: #0A0A0A;
+font-family: Arial;
+font-size: 90%;
+font-style: normal;
+font-weight: 68%;
+margin-top: 2%;
+margin-bottom: 1%;
+padding-left:2%;
+margin-left: 4%;
+}
+
+.inputsubtitle{
+color: #717182;
+font-family: Arial;
+font-size: 70%;
+font-style: normal;
+padding-left:2%;
+margin-left:4%;
+margin-right:4%;
+margin-bottom:1%;
+border-radius: 4px;
+border: 1px solid rgba(0, 0, 0, 0.00);
+background: #F3F3F5;
+}
