@@ -7,7 +7,7 @@ const Header=({info})=>{
 return(
      <div className={style.Header}>
        <div className={style.logo}>
-          <Image src="/logo.png" width={20} height={20}/>
+          <Image src="/logo.png" width={20} height={20} alt="logo"/>
           <h6 className={style.logofont}>NIHUB Events </h6>
        </div>
       <div className={style.explore}>

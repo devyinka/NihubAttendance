@@ -1,18 +1,20 @@
 "use client"
 import useState from "react"
+import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 import style from "./Trackchoice.module.css"
 import { data } from "./mockbackendresponsemock"
 
-const Trackchoice=({label, value, setValue,BACKendURl,id})=>{
-// const url = new URL(BACKendURl);
-//   const programid = url.pathname.split('/').pop(); // uncomment all these codes after intgrate with backend
+const Trackchoice=({label, value, setValue})=>{                                           
+ // const [options, setoptions]=useState([])    // uncomment all these codes after intgrate with backend
 
- // const [options, setoptions]=useState([])
+ const searchParams = useSearchParams();
+  const id = searchParams.get('Programid')
+
             useEffect(()=>{ 
                 const fetchOptions=async()=>{
                     try{
-                        const Response=await fetch(`BACKURL/${programid}`)// this will use programid to fetch that particular document
+                        const Response=await fetch(`BACKendURL/${id}`)   // this will use programid to fetch that particular track of that event
                         const data=await Response.json()
                         setoptions(data)
                     }catch(error){
@@ -20,10 +22,11 @@ const Trackchoice=({label, value, setValue,BACKendURl,id})=>{
                     }
                 }
                 fetchOptions()
-            }, [BACKendURl])
+            }, [])
   
-const look=4
-  const ResponseMock=data.find((data)=>data.id==look)//mock backend response to be replaced with actual backend response
+const look=id
+
+  const ResponseMock=data.find((data)=>data.id==look) //mock backend response to be replaced with actual backend response
    
             
     return(

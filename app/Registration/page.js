@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Header from "@/public/src/components/RegistrationPageComponents/header";
 import style from "./Registration.module.css"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams  } from "next/navigation";
 import { useState } from "react"
 import Input from "@/public/src/components/RegistrationPageComponents/forminput";
 import Trackchoice from "@/public/src/components/RegistrationPageComponents/Trackchoice";
@@ -11,16 +11,17 @@ import Trackchoice from "@/public/src/components/RegistrationPageComponents/Trac
 
 const Registration=()=>{
     const Navigation=useRouter()
+    const searchParams = useSearchParams()
+    const Programid = searchParams.get('Programid');
 
 // In other to store URL parameter to send each program to its own end point.
-const [programid, setProgramid] = useState(null);
+const [Query, SetQuery] = useState(null);
 
-  useEffect(() => {
-    if (Navigation.isReady) {
-      setProgramid(Navigation.query.programid);
+ useEffect(() => {
+    if (Programid) {
+      SetQuery(Programid);
     }
-   
-  }, [Navigation.isReady]);
+  }, [Programid]);
 
 
     const [fullname, setfullname]=useState("")
@@ -59,7 +60,7 @@ const [programid, setProgramid] = useState(null);
     formdata.append("photo", photo) 
 
     try{    
-        const response=await axios.post(`BACKEND-URL/${programid}`, formdata, {
+        const response=await axios.post(`BACKEND-URL/${Programid}`, formdata, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }  
@@ -68,7 +69,8 @@ const [programid, setProgramid] = useState(null);
 
         setsuccess("Registration successful!")
         seterror("")  
-        setloading(false)      
+        setloading(false)  
+        return    
 
     }catch(error){
         seterror("Registration failed. Please try again.")
@@ -106,8 +108,8 @@ const [programid, setProgramid] = useState(null);
                     <option  className={style.title} value="female">Female</option>
                 </select>
                 </div>
-                                                                     {/*there is no need of program id  once the backend is ready */}
-         <Trackchoice label="Select your Track" value={track} setValue={settrack} BACKendURl={`BACKenURL/${programid}`} id={programid}/>
+                                                                    
+         <Trackchoice label="Select your Track" value={track} setValue={settrack} BACKendURl={`BACKenURL/${Query}`}/>
                 
                 <label className={style.title}>Upload your Passport Photograph</label>
                 <div className={style.subtitle}>

@@ -6,21 +6,43 @@ import EventRegistration from "@/public/src/components/landingpagecomponent/Card
 import data from "@/public/src/components/landingpagecomponent/backendresponsemock"
 import style from "./page.module.css"
 import Header from "@/public/src/components/landingpagecomponent/header"
+import axios from "axios"
 
 export default function Home() {
   const [events, setEvents] = useState([])
+  const [error, seterror]=useState("")
+  const [loading, setloading]=useState("")
+  const [success, setsuccess]=useState("")
 
   // useEffect(() => {  
   //   // Simulate fetching data from an API
   //   const fetchEvents = async () => {
-  //        await fetch('https://your-backend-api.com/events')
+  //        await fetch('backendurl')
   //       .then((response) => response.json())
   //       .then((data) => setEvents(data))
   //       .catch((error) => console.error('Error fetching events:', error));
   //   }     
   //     setEvents(data)
-  //   }, [events]);
+  //   }, [events[]);
 
+  useEffect(()=>{
+   const fetchEvents =async ()=>{
+    setloading(true)
+    try{
+    const response=await axios.get(/*BACKENDURLTOGETEVENT*/)
+    const  info=response.json()
+    setEvents(info.data)
+    seterror("")
+    setloading(false)
+    setsuccess("suceesfullygetting the latest info")
+           
+    }catch(erro){
+      seterror("fail to get data frombackend data",erro)
+      setsuccess("")
+      setloading(false)
+    }
+   }   
+  })
 
   return (
   <div style={{backgroundColor:"white"}}>
@@ -37,6 +59,8 @@ export default function Home() {
   <div className={style.eventcontainer}>
   <EventRegistration data={data}/>
   </div>
+        {error && <p className={style.error}>{error}</p>}
+        {success && <p className={style.sucess}>{success}</p>}
   </div>
   )}
 

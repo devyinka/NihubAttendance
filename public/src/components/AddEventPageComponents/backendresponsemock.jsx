@@ -7,7 +7,7 @@ const data=[{
     date:"21-02-2030",
     Register:"45",
     status:true,
-    Tracks: [{ id:1, Abrevation: "DEV", fullname: "Mobile App and Website dev" },
+    Tracks: [{ id:1, Abrevation: "DEV", fullname: "MobileApp and webDev" },
              { id:2, Abrevation: "NET", fullname: " Networking" },
              { id:3, Abrevation: "ENG", fullname: "Hardware Engineering" },
              {  id:4,Abrevation: "DS", fullname: "Data Science"}

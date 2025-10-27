@@ -1,0 +1,44 @@
+.title{
+color: #0A0A0A;
+font-family: Arial;
+font-size: 90%;
+font-style: normal;
+font-weight: 68%;
+margin-top: 2%;
+margin-bottom: 1%;
+padding-left:2%;
+}
+
+.inputsubtitle{
+color: #717182;
+font-family: Arial;
+font-size: 70%;
+font-style: normal;
+padding-left:2%;
+padding-top:1%;
+padding-bottom: 0.5%;
+margin-bottom:2%;
+border-radius: 4px;
+border: 1px solid rgba(0, 0, 0, 0.00);
+background: #F3F3F5;
+margin-left: 1%;
+width: 96%;
+}
+
+.container{
+    flex: 1%;
+     margin-left: 1%;
+     margin-right: 1%;
+     
+}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 480px) {
+    .title{
+        font-size: 50%;
+    }
+    .inputsubtitle{
+        font-size: 40%;
+    }
+}

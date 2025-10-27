@@ -5,7 +5,7 @@ import Link from "next/link"
 const EventRegistration=({data})=>{
 
     return(
-        data.map((programinfo)=>(
+        data.filter(programinfo => programinfo.status).map((programinfo)=>(
         <div key={programinfo.id} className={style.cardSize}>
             <Image src={programinfo.imageurl} alt="image" height={100} width={236}/>
             <h2 className={style.eventname}>{programinfo.name}</h2>
@@ -26,9 +26,8 @@ const EventRegistration=({data})=>{
               </div>
               <div className={style.button}>
               <Link href={`./Registration?Programid=${programinfo.id}`}>Register for the event</Link>
-              </div>
-              
             </div>
+        </div>
        
         )   
     )

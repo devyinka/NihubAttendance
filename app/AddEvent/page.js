@@ -7,7 +7,6 @@ import { useState } from "react"
 import Input from "@/public/src/components/AddEventPageComponents/Forminput";
 import Header from "@/public/src/components/AddEventPageComponents/header";
 import DescribeInput from "@/public/src/components/AddEventPageComponents/Descriptioninput";
-import ManageEvent from "../ManageEvent/page";
 
 const AddEvent=()=>{
   const Navigation=useRouter()
@@ -33,23 +32,23 @@ const AddEvent=()=>{
     let id=0;
 
 const handleAttendancepage=(change)=>{
-  setbutton(change);
   Navigation.push("./Attendace")
+  setbutton(change);
 }
 
 const handlecreatepage=(change)=>{
-  setbutton(change)
   Navigation.push("./AddEvent")
+  setbutton(change)
 }
 
 const handlemanagepage=(change)=>{
-  setbutton(change)
   Navigation.push("./ManageEvent")
+  setbutton(change)
 }
 
 const handlesubadmnpage=(change)=>{
-  setbutton(change)
   Navigation.push("./subadmin")
+  setbutton(change)
 }
 
 
@@ -121,8 +120,10 @@ else{
       seteventimageurl("")
       seteventtracks([])
 
-    const Response= await axios.post("BACKENDURL",eventcollections);
+   const Response= await axios.post("BACKENDURL",eventcollections);
       setloading(false)
+       setsuccess("your data has been successfully saved")
+      return Response.data
   }
   catch(error){
    seterror("Backend require")
@@ -138,29 +139,30 @@ else{
  return(
     <div>
      <Header info="Create Event"/>
-     <div className={style.maincontainer}>
-       <button className={style.logoutbox} onClick={handlelogout}>
-          <Image src="/logout.svg" width={14} height={14} alt="logouticon"/>
-          <div className={style.logout}>
-          log out
+    <div className={style.container}>
+            <div className={style.Titleandlogoutcontainer}>
+             <div className={style.title}>Admin Dashboard</div>
+             <div>
+               <button onClick={handlelogout} className={style.logoutbox}>
+                <Image src="/logout.svg" width={14} height={14} alt="logouticon"/>
+                <div className={style.logout} >
+                logout
+                </div>
+                </button>
+             </div>
+             </div>
+            <div>
+            </div>
+                <h4 className={style.subtitle}>
+                 Manage events, attendance, and sub-admin requests.
+                </h4>
           </div>
-    </button>
-        <div className={style.titleAndsubtitlecontainer}>
-         <h3 className={style.title}>
-          Admin Dashboard
-          </h3>
-          <h4 className={style.subtitle}>
-          Manage events, attendance, and sub-admin requests
-          </h4>
-     </div>
-      </div>
 
     <div className={style.buttonscontainer}>
         <button className={button=="create"? style.Active: ""}  onClick={()=>handlecreatepage("create")}>
-          {/* <div className={style.arrange}><Image src="/createEvent.svg" width={10} height={10}/><h4>Create-events</h4></div></button> */}
           Create events
         </button>
-        <button className={button=="manage"? style.Active: ""}  onClick={()=>handlemanagepage("manage")}>Manag events</button>
+        <button className={button=="manage"? style.Active: ""}  onClick={()=>handlemanagepage("manage")}>Manage events</button>
         <button className={button=="Attendance"? style.Active: ""}  onClick={()=>handleAttendancepage("Attendance")}>Attendance</button>
         <button className={button=="subadmin"? style.Active: ""} onClick={()=>handlesubadmnpage("subadmin")}>Sub-Admins</button>
       </div>
