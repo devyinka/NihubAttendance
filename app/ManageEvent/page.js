@@ -1,6 +1,6 @@
  "use client"
  import { useRouter } from "next/navigation"
- import { useEffect, useState } from "react"
+ import { useContext, useEffect, useState } from "react"
  import Image from "next/image"
  import style from "./ManageEvent.module.css"
  import Header from "@/public/src/components/AddEventPageComponents/header"
@@ -8,11 +8,14 @@
 import axios from "axios"
 import Input from "@/public/src/components/manageEventpagecomponents/forminput"
 import DescribeInput from "@/public/src/components/manageEventpagecomponents/Descriptioninput"
+import Scroll from "@/public/src/components/scroll"
+import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex"
 
 
 const ManageEvent=()=>{
 const Navigation=useRouter()
-        
+const {Role}=useContext(Rolecontex)
+
  let [button,setbutton]=useState("manage");
  const [event,setevent]=useState(data)
  const [edit, setedit]=useState(false)
@@ -35,7 +38,7 @@ const handlelogout=()=>{
 
 //to navigate to Attendance marking page once the button is click
 const handleAttendancepage=(change)=>{
-     Navigation.push("./Attendace")
+     Navigation.push("./Attendance")
     setbutton(change);
 }
 
@@ -68,7 +71,7 @@ const handleedit=(id)=>{
  seteditedeventid(id)
 }
 
-//to change status of event in to open or closed  and send the status value to backend
+//to change status of event to open or closed  and send the status value to backend
 const handlestatuschange= async (statusid)=>{
   setloading(true)
   const update=event.map((result)=>{
@@ -151,15 +154,15 @@ const handledeletevent= async (deleteid)=>{
 const updated=event.filter(eventinfo=>eventinfo.id !==deleteid)
  try{
   const response=await axios.delete(/*BACKENDURL TO DELETE */{
-  deleteid
+  data:deleteid
  }) 
 
-  setdeleteevent({...deleteevent,[deleteid]:true})
+  // setdeleteevent({...deleteevent,[deleteid]:true})
   setsuccess("the data has been successfullly delete")
   seterror("")
   return
   }
-  catch(erro){
+  catch(error){
   seterror("unable to delete",error)
   setsuccess("")
   setloading(false)    
@@ -177,7 +180,7 @@ return(
       <div className={style.title}>Admin Dashboard</div>
       <div>
       <button className={style.logoutbox} onClick={handlelogout}>
-       <Image src="/logout.svg" width={14} height={14} alt="logouticon"/>
+       <Image src="/logout.svg" width={14} height={14} alt="logouticon" style={{color:"#7741C3"}}/>
        <div className={style.logout}> logout </div>    
        </button>
        </div>
@@ -186,14 +189,17 @@ return(
          Manage events, attendance, and sub-admin requests.
        </h4>
     </div>
-    <div className={style.buttonscontainer}>
-       <button className={button=="create"? style.Active: ""}  onClick={()=>handlecreatepage("create")}>
-        Create events
-       </button>
-       <button className={button=="manage"? style.Active: ""}  onClick={()=>handlemanagepage("manage")}>Manage events</button>
-       <button className={button=="Attendance"? style.Active: ""}  onClick={()=>handleAttendancepage("Attendance")}>Attendance</button>
-       <button className={button=="subadmin"? style.Active: ""} onClick={()=>handlesubadmnpage("subadmin")}>Sub-Admins</button>
-    </div>
+      { Role=="Admin"? <div className={style.buttonscontainer}>
+        <button className={button=="create"? style.Active: ""}  onClick={()=>handlecreatepage("create")}> Create events</button>
+        <button className={button=="manage"? style.Active: ""}  onClick={()=>handlemanagepage("manage")}>Manage events</button>
+        <button className={button=="Attendance"? style.Active: ""}  onClick={()=>handleAttendancepage("Attendance")}>Attendance</button>
+        <button className={button=="subadmin"? style.Active: ""} onClick={()=>handlesubadmnpage("subadmin")}>Sub-Admins</button>
+   </div>:<div className={style.buttonscontainer}>
+        <button className={button=="create"? style.Active: ""}  onClick={()=>handlecreatepage("create")}> Create events</button>
+        <button className={button=="manage"? style.Active: ""}  onClick={()=>handlemanagepage("manage")}>Manage events</button>
+        <button className={button=="Attendance"? style.Active: ""}  onClick={()=>handleAttendancepage("Attendance")}>Attendance</button>
+   </div>}
+    <Scroll>
      <div className={style.box}>
        <h4 className={style.text}>Manage events</h4>
       <div className={style.subbox}>
@@ -235,6 +241,7 @@ return(
       </div>
       </div>
       </div>
+      </Scroll>
             {/* edited box for inputs*/}
 {edit? <div>
   <form>

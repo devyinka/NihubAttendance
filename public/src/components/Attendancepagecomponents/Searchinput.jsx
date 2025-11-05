@@ -1,12 +1,13 @@
-import style from "./forminput.module.css"
- const Input = ({ type, label, value, setValue }) => {
+import style from "./Searchinput.module.css"
+const Search = ({ type, label, value, setValue }) => {
+    
   return (
     <div className={style.container}>
       <label className={style.title}>{label}</label>
       <div className={style.inputsubtitle}>
         <input
           type={type}
-          placeholder={`${label.toLowerCase()}`}
+          placeholder=" matric number..."
           value={value}
           onChange={(event) =>setValue(event.target.value)}
           
@@ -16,4 +17,4 @@ import style from "./forminput.module.css"
   );
 };
 
-export default Input;
+export default Search;

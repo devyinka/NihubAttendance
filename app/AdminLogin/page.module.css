@@ -1,6 +1,7 @@
 .backbotton{
     color:black;
-    background: rgba(159, 118, 216, 0.5);
+    /* background: rgba(159, 118, 216, 0.5); */
+    background: #7741C3;
      font-size:60%;
      margin-top:10%;
      margin-bottom: 1%;
@@ -35,8 +36,8 @@
      margin: 0% 30% 20% 30%;
      background-color: white; 
      border-radius: 6;
-     border:1px solid  rgba(159, 118, 216, 80);
-     
+     /* border:1px solid  rgba(159, 118, 216, 80); */
+     border: 1px solid #7741C3;;
 }
 
 .Login{
@@ -99,7 +100,8 @@ margin-right:5%;
 margin-bottom:2%;
 border-radius: 4px;
 border: 1px solid rgba(0, 0, 0, 0.00);
-background: rgba(159, 118, 216, 0.5);
+/* background: rgba(159, 118, 216, 0.5); */
+background: #7741C3;
 width: 90%;
 justify-items: center;
 margin-top:2%;

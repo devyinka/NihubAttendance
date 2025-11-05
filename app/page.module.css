@@ -1,19 +1,30 @@
 .container{
-background: #FFF;
-position: relative;
+/* background: #FFF;
+position: relative; */
 }
 .background{
 display: inline-flex;
-padding: 0px 70px 0px 70px;
+position: relative;
+/* overflow: hidden; */
+padding: 0 5% 0 5%;
 justify-content: flex-end;
 align-items: center;
-background: rgba(159, 118, 216, 0.5);
+background: linear-gradient(180deg, rgba(119, 65, 195, 0.50) 0%, rgba(57, 31, 93, 0.50) 40.23%),url("/image.png");
 backdrop-filter: blur(0px);
+/* background:url("/image.png"); */
+background-position: "center";
+background-size: cover;
+background-repeat: no-repeat;
+
 }
 
-.image{
-background: linear-gradient(rgba(70, 15, 148, 0.5));
-position: relative;
+
+.overlay{
+  position: absolute;
+  inset: 0;
+   z-index:1;
+   pointer-events: none;
+   background-color: rgba(100, 65, 195, 0.19);
 }
 
 .availableevent{
@@ -38,11 +49,12 @@ margin-top: 0;
 width: 55%;
 height:50%;
 background:white;
-margin-top: 6px;
+/* margin-top: 6px; */
+margin-top: -1%;
 }
 
 .textheading{
-color: #0A0A0A;
+color:blueviolet;
 text-align: center;
 font-family: Arial;
 font-size: 20px;
@@ -52,7 +64,7 @@ line-height: 20px;
 justify-content: center;
 }
 .subheading{
-  color: #4A5565;
+  color:#7741C3;
 text-align: center;
 font-family: Arial;
 font-size: 65%;
@@ -73,27 +85,65 @@ position: absolute;
 }
 
 .wellcome{
-width: 528px;
-color: #FFF;
-text-align: center;
+  text-align: center;
 -webkit-text-stroke-width: 1px;
 -webkit-text-stroke-color: #FFF;
 font-family: Arial;
-font-size: 48px;
+font-size: 300%;
 font-style: normal;
 font-weight: 700;
-line-height: 50px; /* 104.167% */
+line-height:90%; 
+backdrop-filter: blur(0px);
 position: absolute;
+margin-right: 54%;
+top:20%
 }
 .subwellcome{
 justify-self: center;
-width: 366px;
-height: 120px;
 color:white;
 font-family: Arial;
-font-size: 18px;
+font-size: 113%;
 font-style: normal;
 font-weight: 250;
 line-height: 25px; 
-margin-top: 10px;
+/* margin-top: 10px; */
+position: absolute;
+margin-right: 55%;
+margin-left: 12%;
+display: flex;
+flex-wrap: wrap;
+}
+
+.explore{
+  position:absolute;
+  margin-right: 65%;
+  margin-bottom: -15%;
+  background-color:#7741C3;
+  width: 15%;
+  padding-top: 0.3%;
+  padding-bottom: 0.3%;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    
+}
+
+@media (max-width: 480px) {
+   .wellcome{
+    font-size: 50%;
+    line-height: 80%;
+    margin-right: 65%;
+    bottom: 20%;
+   }
+   .subwellcome{
+    font-size: 35%;
+    line-height: 70%;
+    margin-right: 60%;
+    margin-top: -5%;
+   }
+   .explore{
+    font-size: 50%;
+    margin-top: -7%;
+   }
 }

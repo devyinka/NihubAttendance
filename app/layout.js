@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Home from "./page";
-
+// import Home from "./page";
+import { Attendancecontexprovider } from "@/public/src/components/Attendancepagecomponents/Attendancecontex";
+import { Rolecontexprovider } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,7 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Rolecontexprovider>
+        <Attendancecontexprovider>
         {children}
+        </Attendancecontexprovider>
+        </Rolecontexprovider>
       </body>
     </html>
   );

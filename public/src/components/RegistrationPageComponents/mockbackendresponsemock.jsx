@@ -7,7 +7,7 @@ const data=[{
     location:" NITDA HUB",
     date:"21-02-2030",
     Register:"45",
-     status:true,
+    status:true,
     Tracks: [{ id:1, Abrevation: "DEV", fullname: "Mobile App and Website dev" },
              { id:2, Abrevation: "NET", fullname: " Networking" },
              { id:3, Abrevation: "ENG", fullname: "Hardware Engineering" },

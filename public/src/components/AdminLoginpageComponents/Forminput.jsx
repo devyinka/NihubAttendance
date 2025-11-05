@@ -5,11 +5,10 @@ import style from "./Forminput.module.css"
       <label className={style.title}>{label}</label>
       <div className={style.inputsubtitle}>
         <input
-          type={type}
+          type={`${type}`}
           placeholder={`Enter your ${label.toLowerCase()}`}
           value={value}
-          onChange={(event) =>setValue(event.target.value)}
-          
+          onChange={(event) =>setValue(event.target.value)}   
         />
       </div>
     </div>

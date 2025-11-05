@@ -28,5 +28,6 @@ align-items: center;
 border-radius: 20px;
 margin-left: 40px;
 border: 1px solid rgba(0, 0, 0, 0.10);
-background:rgba(119, 65, 195, 0.50);
+/* background:rgba(119, 65, 195, 0.50); */
+background: #7741C3;
 }

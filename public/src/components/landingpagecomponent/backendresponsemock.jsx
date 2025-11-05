@@ -1,7 +1,7 @@
 const data=[{
     id:1,
     name:"IT Program",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security",
     location:" NITDA HUB",
     date:"21-02-2030",
@@ -18,7 +18,7 @@ const data=[{
 {
     id:2,
     name:"Cisco Program",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security ",
     location:" NITDA HUB",
     date:"21-02-2030",
@@ -34,7 +34,7 @@ const data=[{
 {
     id:3,
     name:"programming",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security",
     location:" NITDA HUB",
     date:"21-02-2030",
@@ -50,7 +50,7 @@ const data=[{
 {
     id:4,
     name:"MATLAB",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security",
    location:" NITDA HUB",
     date:"21-02-2030",
@@ -66,7 +66,7 @@ const data=[{
 {
     id:5,
     name:"Microcontroller",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security",
     location:" NITDA HUB",
     date:"21-02-2030",
@@ -82,7 +82,7 @@ const data=[{
 {
     id:6,
     name:"Cyber Security",
-    imageurl:"https://i.ibb.co/ZYW3VTp/brown-brim.png",
+    imageurl:"",
     programDescription:"cyber Security",
     location:"NITDA HUB",
     date:"21-02-2030",
@@ -99,3 +99,5 @@ const data=[{
 ]
 
 export default data;
+
+// https://i.ibb.co/ZYW3VTp/brown-brim.png

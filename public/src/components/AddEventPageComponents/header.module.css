@@ -5,7 +5,9 @@ justify-content: space-between;
 align-items: center;
 flex-shrink: 0;
 align-self: stretch;
- background: rgba(159, 118, 216, 0.5); 
+background: #7741C3;
+ /* background: rgba(159, 118, 216, 0.5);  */
+
 
 }
 

@@ -6,7 +6,7 @@ import style from "./Trackchoice.module.css"
 import { data } from "./mockbackendresponsemock"
 
 const Trackchoice=({label, value, setValue})=>{                                           
- // const [options, setoptions]=useState([])    // uncomment all these codes after intgrate with backend
+ // const [options, setoptions]=useState([])    // uncomment all this line after intgrate with backend
 
  const searchParams = useSearchParams();
   const id = searchParams.get('Programid')
@@ -14,7 +14,7 @@ const Trackchoice=({label, value, setValue})=>{
             useEffect(()=>{ 
                 const fetchOptions=async()=>{
                     try{
-                        const Response=await fetch(`BACKendURL/${id}`)   // this will use programid to fetch that particular track of that event
+                        const Response=await fetch(`${ApI}/${id}`)   // this will use programid to fetch that particular track of that event
                         const data=await Response.json()
                         setoptions(data)
                     }catch(error){
@@ -24,11 +24,10 @@ const Trackchoice=({label, value, setValue})=>{
                 fetchOptions()
             }, [])
   
-const look=id
+const look=id ||1 // i will later remove 1
 
   const ResponseMock=data.find((data)=>data.id==look) //mock backend response to be replaced with actual backend response
-   
-            
+        
     return(
         <div>
             <label className={style.title}>{label}</label>
