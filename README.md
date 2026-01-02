@@ -42,7 +42,7 @@ I engineered a custom algorithm to handle daily tracking efficiently:
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js, Tailwind CSS
+- **Frontend:** Next.js, Tailwind CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Tools:** QR Code API, Nodemailer (for verification), JWT (Authentication)
