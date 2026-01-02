@@ -6,7 +6,7 @@
       <div className={style.inputsubtitle}>
         <input
           type={type}
-          placeholder={`Enter your ${label.toLowerCase()}`}
+          placeholder={`Enter your ${label}`}
           value={value}
           onChange={(event) =>setValue(event.target.value)}
           

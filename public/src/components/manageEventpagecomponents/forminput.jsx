@@ -1,5 +1,5 @@
-import style from "./forminput.module.css"
- const Input = ({ type, label, value, setValue }) => {
+import style from "./forminput.module.css";
+const Input = ({ type, label, value, setValue }) => {
   return (
     <div className={style.container}>
       <label className={style.title}>{label}</label>
@@ -7,9 +7,8 @@ import style from "./forminput.module.css"
         <input
           type={type}
           placeholder={`${label.toLowerCase()}`}
-          value={value}
-          onChange={(event) =>setValue(event.target.value)}
-          
+          value={value ?? ""}
+          onChange={(event) => setValue && setValue(event.target.value)}
         />
       </div>
     </div>

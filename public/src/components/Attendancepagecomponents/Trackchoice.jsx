@@ -1,99 +1,112 @@
-import data from "../AddEventPageComponents/backendresponsemock"
-import style from "./trackchoice.module.css"
-import { useState,useEffect } from "react"
-import axios from "axios"
-import { useContext } from "react"
-import { Attendancecontex } from "./Attendancecontex"
+import data from "../AddEventPageComponents/backendresponsemock";
+import style from "./trackchoice.module.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useContext } from "react";
+import { Attendancecontex } from "./Attendancecontex";
 
+const Trackchoice = ({ label, value, setValue }) => {
+  const API = process.env.NEXT_PUBLIC_API;
+  const {
+    selectedeventid,
+    setselectedeventid,
+    selectedtrackid,
+    setselectedtrackid,
+    seterror,
+    setstudentinfo,
+  } = useContext(Attendancecontex);
 
-const Trackchoice=({label, value, setValue})=>{
+  const [Events, setEvents] = useState([]); // it will be use to replace the mock data
+  const [trackvalue, settrackvalue] = useState("");
+  const [tracks, settracks] = useState([]); //it will be use to get value of track to replace mock
+  const [loading, setloading] = useState(false);
+  const [success, setsuccess] = useState("");
 
-const {selectedeventid, setselectedeventid,
-      selectedtrackid, setselectedtrackid,
-      seterror, setstudentinfo}=useContext(Attendancecontex)
+  useEffect(() => {
+    const GetEvents = async () => {
+      setloading(true);
 
-const [events, setevents]=useState([]);  // it will be use to replace the mock data
-const [trackvalue, settrackvalue]=useState("")
-const [tracks, settracks]=useState([]);//it will be use to get value of track to replace mock
+      try {
+        const Response = await axios.get(`${API}/GetEvents`);
+        const info = Response.data;
+        if (!info.data || info.data.length === 0) {
+          seterror(
+            Response.Error?.message || "No events available at the moment"
+          );
+          setTimeout(() => {
+            seterror("");
+          }, 4000);
+          setsuccess("");
+          setloading(false);
+          return;
+        } else {
+          setEvents(info.data);
+          setsuccess(Response.data?.message || "Events fetched successfully");
+          seterror("");
+          setTimeout(() => {
+            setsuccess("");
+          }, 4000);
+          setloading(false);
+        }
+      } catch (Error) {
+        seterror(Response.Error?.message || "fail to get data", Error);
+        setTimeout(() => {
+          seterror("");
+        }, 4000);
+        setsuccess("");
+        setloading(false);
+      }
+    };
+    GetEvents();
+  }, []);
 
-useEffect(()=>{ 
+  const handleeventclick = async (eventid) => {
+    const findevent = Events.find((event) => event._id == eventid);
+    settracks(findevent ? findevent.eventtracks : []);
+    setselectedeventid(eventid);
+    setValue(eventid);
+  };
 
-const fetchOptions=async()=>{
-try{
-  const Response=await axios.get(/*`${ApI}/event/${id}`*/)   // this will use programid to fetch event
-  const data=await Response.json()
-  setevents(data)  
- }catch(error){
-  seterror("unable to fetch event",error)
- }
-  }
- fetchOptions()
-}, [])
+  const handletrackselected = async (trackid) => {
+    settrackvalue(trackid);
+    setselectedtrackid(trackid);
+  };
 
-//on click all the availabe tracks for this will be display
-const handleeventclick= async (eventid)=>{
+  return (
+    <div className={style.container}>
+      <label className={style.title}>{label}</label>
+      <div className={style.inputsubtitle}>
+        <select
+          className={style.selected}
+          value={value}
+          onChange={(event) => handleeventclick(event.target.value)}
+        >
+          <option value="">All events </option>
+          {Events.map((option) => (
+            <option className={style.title} key={option._id} value={option._id}>
+              {option.eventname}
+            </option>
+          ))}
+        </select>
 
-setValue(eventid)
-setselectedeventid(eventid)
-
-try{
-  axios.get(`${API}event/${selectedeventid}/tracks`)
- .then(response=>{
-     settracks(response.data)//   this is what  later use once the backend is ready
- })
-}catch{(error) => {
-    seterror("fail to fetch  track", error)
- } }
-}
-
- const handletrackselected=async (trackid)=>{
-
-     settrackvalue(trackid)   
-     setselectedtrackid(trackid)
-    try{
-      if(selectedtrackid){
-         const student=await axios.get(`${API}studentinfo/${selectedeventid}/${selectedtrackid}`)
-         const response=await student.data
-         setstudentinfo(response)}
-         else{
-         const student=await axios.get(`${API}studentinfo/${selectedeventid}`)
-         const response=await student.data
-         setstudentinfo(response)
-         }
-
-    }catch(error){
-     seterror("unable to find student record" , error)
-    }
-}
-    
-
-
-const ResponseMock=data.find((data)=>data.id==selectedeventid) // once the API is integrate with this i will remve this 
-return(
-      <div className={style.container}>
-        <label className={style.title}>{label}</label>
-        <div className={style.inputsubtitle}> 
-        <select  className={style.selected} value={value} onChange={(event)=>handleeventclick(event.target.value)} >
-        <option value="">All events </option>
-         {data.map((option)=>(//this data will be replace to use event state later
-           <option className={style.title} key={option.id} value={option.id}>
-              {option.name}
-          </option>
-                ))}
-         </select>  
-        
-        {selectedeventid &&
-         <select value={trackvalue} onChange={(event)=>handletrackselected(event.target.value)} className={style.selected2}>
-                  <option value="">select track </option>
-                  {ResponseMock.Tracks.map((option)=>//this ResponseMock .track will later use tracks directly from backend
-                  <option key={option.id} value={option.id}> {option.fullname}</option>
-                )}
-         </select>}
-            </div>      
-        </div>
-)
-
-}
+        {selectedeventid && (
+          <select
+            value={trackvalue}
+            onChange={(event) => handletrackselected(event.target.value)}
+            className={style.selected2}
+          >
+            <option value="">select track </option>
+            {tracks.map((option) => (
+              <option key={option._id} value={option._id}>
+                {" "}
+                {option.trackName}{" "}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default Trackchoice;
-

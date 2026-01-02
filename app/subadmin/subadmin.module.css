@@ -194,7 +194,7 @@ padding-bottom: 8%;
     margin-top: 4%;
 }
 .button2{
- color: #0A0A0A;
+ color:#7741C3;
 border-radius: 8px;
 border: 1px solid rgba(0, 0, 0, 0.10);
 background: #FFF;
@@ -203,6 +203,36 @@ justify-content: center;
  margin-top: 4%;
 }
 
+.confirmdelete{
+    justify-self: center;
+    margin-top: 2%;
+    border: 1px solid, rgba(0, 0, 0, 0.10);
+    width: 35%;
+    border-radius: 10px;
+     position:absolute;
+    top:55%;
+    background: #7741C3;
+
+  
+}
+
+.warning{
+    justify-self: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.deletebutton{
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 2%;
+    padding-top: 1% 0, 1% ,0;
+    background-color: white;
+    color:#7741C3;
+    width: 40%;
+    border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
 
 
 @media (max-width: 480px) {

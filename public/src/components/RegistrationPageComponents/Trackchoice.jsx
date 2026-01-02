@@ -1,49 +1,49 @@
-"use client"
-import useState from "react"
-import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
-import style from "./Trackchoice.module.css"
-import { data } from "./mockbackendresponsemock"
+"use client";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import style from "./Trackchoice.module.css";
 
-const Trackchoice=({label, value, setValue})=>{                                           
- // const [options, setoptions]=useState([])    // uncomment all this line after intgrate with backend
+const Trackchoice = ({ label, value, setValue }) => {
+  const ApI = process.env.NEXT_PUBLIC_API;
+  const [options, setoptions] = useState([]); // uncomment all this line after intgrate with backend
+  const searchParams = useSearchParams();
+  const eventid = searchParams.get("Programid");
 
- const searchParams = useSearchParams();
-  const id = searchParams.get('Programid')
+  useEffect(() => {
+    if (!eventid) return;
 
-            useEffect(()=>{ 
-                const fetchOptions=async()=>{
-                    try{
-                        const Response=await fetch(`${ApI}/${id}`)   // this will use programid to fetch that particular track of that event
-                        const data=await Response.json()
-                        setoptions(data)
-                    }catch(error){
-                        console.error("Error fetching options:", error)
-                    }
-                }
-                fetchOptions()
-            }, [])
-  
-const look=id ||1 // i will later remove 1
+    const Gettrackofevent = async () => {
+      try {
+        const Response = await axios.post(`${ApI}/GetEventTracks`, { eventid });
+        const tracks = Response.data?.tracks ?? Response.data;
+        setoptions(tracks);
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
+    };
+    Gettrackofevent();
+  }, [eventid]);
 
-  const ResponseMock=data.find((data)=>data.id==look) //mock backend response to be replaced with actual backend response
-        
-    return(
-        <div>
-            <label className={style.title}>{label}</label>
-            <div className={style.inputsubtitle}> 
-            <select style={{border:"none", outline:"none"}} value={value} onChange={(event) => setValue(event.target.value)}>
-                <option value="">Select {label}</option>
-                {ResponseMock.Tracks.map((option)=>(
-                    <option className={style.title} key={option.id} value={option.Abrevation}>
-                        {option.fullname}
-                    </option>
-                ))}
-            </select> 
-            </div>
-        </div>
-    )
-
-}
+  return (
+    <div>
+      <label className={style.title}>{label}</label>
+      <div className={style.inputsubtitle}>
+        <select
+          style={{ border: "none", outline: "none" }}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+        >
+          <option value="">Select {label}</option>
+          {options.map((option) => (
+            <option className={style.title} key={option._id} value={option._id}>
+              {option.trackName}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
 
 export default Trackchoice;

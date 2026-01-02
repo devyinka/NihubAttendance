@@ -1,84 +1,47 @@
-.cardSize{
-    margin-top:4%;
-    margin-left: 0;
-    margin-right: 0;
-    width: 32%;
-    height: 75%px;
-    background: #F9FAFB;
-    margin-bottom: 10%;
+.button {
+  color: white;
+  font-size: 50%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
+  font-family: Arial;
+  font-size: 60%;
+  text-align: center;
+  width: 95%;
+  background-color: #7741c3;
 }
-.button{
-     color: white;
-     font-size:50%;
-     margin-top:5%;
-     margin-left:5%;
-     margin-right:5%;
-     margin-bottom: 1%;
-     padding-left: 1%;
-     padding-right: 1%;
-     font-family: Arial;
-     font-size: 60%;
-    text-align: center;
-    width:95%;
-    background-color: #7741C3;;
-    
+.eventname {
+  color: #7741c3;
+  font-family: Arial;
+  font-size: 90%;
+  font-style: normal;
+  font-weight: 60%;
+  line-height: 60%;
+  margin: 5%;
+  text-align: center;
 }
-.eventname{
-color: #7741C3;;
-font-family: Arial;
-font-size: 90%;
-font-style: normal;
-font-weight: 60%;
-line-height: 60%; 
-margin: 5%;
-text-align: center;
- 
-}
-.subtitle{
-/* color: #717182; */
-color:#7741C3;;
-font-family: Arial;
-font-size: 80%;
-font-style: normal;
-font-weight: 400;
-line-height: 40%;
+.subtitle {
+  /* color: #717182; */
+  color: #7741c3;
+  font-family: Arial;
+  font-size: 80%;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40%;
 }
 
-.container{
-    display: flex;
-    align-items: center;
-    font-size: 60%;
-    gap:5;
-}
-.describe{
-    padding: 10 10 10 10;
-    height: 90px;
-    text-align:start;
-    width: 100%;
-    font-size: 70%; 
-    overflow:hidden;
-    text-overflow: ellipsis; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 5; 
-    -webkit-box-orient: vertical; 
-    line-clamp: 5; 
+.container {
+  display: flex;
+  align-items: center;
+  font-size: 60%;
+  gap: 5;
 }
 
 @media (max-width: 768px) {
-    .describe {
-        font-size: 60% 
-    }
+  .eventname {
+    font-size: 45%;
+  }
 }
-
-@media (max-width: 480px) {
-    .describe {
-        font-size: 45%; 
-    }
-     .button {
-        font-size: 40%; 
-    }
-     .eventname{
-        font-size: 45%;
-    }
-}
-

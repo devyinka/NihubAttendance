@@ -1,35 +1,31 @@
-import { useContext } from "react"
-import style from "./Attendanceinfo.card.module.css"
-import { Attendancecontex } from "./Attendancecontex"
+import { useContext } from "react";
+import style from "./Attendanceinfo.card.module.css";
+import { Attendancecontex } from "./Attendancecontex";
 
+const Attendanceinfo = ({ search }) => {
+  const { studentinfo } = useContext(Attendancecontex);
 
-const Attendanceinfo=({search})=>{
-    
-    const {studentinfo}=useContext(Attendancecontex)
+  const filterstudents = studentinfo.filter((student) =>
+    student.student_matricnumber.includes(search)
+  );
 
-    const filterstudents=studentinfo.filter(student=>
-        student.matricnumber.includes(search)
-    )
-
-    return(
-        <div>
-            {filterstudents.map((info)=>(
-                <div  key={info.id} >
-                    <div  className={style.container}>
-                    <span className={style.matric}>{info.matricnumber}</span>
-                    <span className={style.event}>{info.eventname}</span>
-                    <span className={style.event}>{info.Trackname}</span>
-                    <span className={style.status}>{info.status}</span>
-                    </div>
-                    <hr className={style.hr}/>
-                </div>
-            ))}
+  return (
+    <div>
+      {filterstudents.map((info) => (
+        <div key={info.student_matricnumber}>
+          <div className={style.container}>
+            <span className={style.matric}>{info.student_matricnumber}</span>
+            <span className={style.event}>{info.eventname}</span>
+            <span className={style.event}>{info.trackname}</span>
+            <span className={style.status}>
+              {info.student_attendance_status}
+            </span>
+          </div>
+          <hr className={style.hr} />
         </div>
-    )
+      ))}
+    </div>
+  );
+};
 
-}
-
-export default Attendanceinfo
-
-
- 
+export default Attendanceinfo;

@@ -3,19 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 5000",
     "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "https": "node server.js"
   },
   "dependencies": {
     "@yudiel/react-qr-scanner": "^2.4.1",
     "axios": "^1.12.2",
+    "html5-qrcode": "^2.3.8",
+    "js-cookie": "^3.0.5",
     "next": "15.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-qr-barcode-scanner": "^2.1.19",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-qr-scanner": "^1.0.0-alpha.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "or": "^0.2.0",
+    "prettier": "^3.0.0-alpha.6",
     "tailwindcss": "^4"
   }
 }

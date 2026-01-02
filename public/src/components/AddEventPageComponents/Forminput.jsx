@@ -5,7 +5,7 @@ import style from "./Forminput.module.css"
     <div className={style.container}>
       <label className={style.title}>{label}</label>
       <div className={style.inputsubtitle}>
-        <input type={`${type}`} value={value}
+        <input type={type} value={value}
           placeholder={`Enter ${label.toLowerCase()}`}
           onChange={(event) =>setValue(event.target.value)} 
         />
