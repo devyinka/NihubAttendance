@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📱 Smart QR Attendance & Event Management System
 
-## Getting Started
+> A comprehensive full-stack solution for managing event logistics, recurring attendance, and role-based administration using the MERN Stack.
 
-First, run the development server:
+## 📖 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This application streamlines the entire flow of event management, from user registration to automated reporting. It solves the problem of manual attendance tracking by generating permanent QR codes for students and using smart logic to automate absentee marking.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🎟️ Student Registration & QR System
 
-## Learn More
+- **Multi-Event Support:** Students can register for multiple events but are strictly limited to one "track" per event to prevent scheduling conflicts.
+- **Automated QR Generation:** Upon successful registration, the system generates a **permanent QR Code**. Students use this single code to mark attendance for the duration of the event (whether it spans months or years).
 
-To learn more about Next.js, take a look at the following resources:
+### 🛡️ Secure Admin Hierarchy (RBAC)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Role-Based Access Control:**
+  - **Super Admins:** Have full control to create events, tracks, and manage Sub-Admins.
+  - **Sub-Admins:** Restricted strictly to operational tasks like scanning QR codes for attendance.
+- **Security:** Super Admin registration is protected by a verification loop requiring external confirmation via a secure message sent to the company email/hub.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### ⚙️ Event Control & Visibility
 
-## Deploy on Vercel
+- **Dynamic Dashboard:** Admins can "Open" or "Close" events. Closed events are instantly hidden from the user dashboard, preventing unauthorized or late registrations.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧠 Smart Attendance Logic
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I engineered a custom algorithm to handle daily tracking efficiently:
+
+1.  **Automated Absenteeism:** If _at least one_ student is marked present in a track, the system assumes class held and automatically marks all other students in that track as **"Absent"** for the day.
+2.  **False Negative Prevention:** If _zero_ attendance is marked (e.g., weekends, holidays, or cancelled classes), the system ignores that day entirely, ensuring students aren't penalized for administrative days off.
+
+### 📊 Dynamic Reporting
+
+- **One-Click Reports:** Admins can download detailed attendance logs at any time.
+- The system compiles data automatically from the **Event Start Date** up to the **Current Download Date**.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React.js, Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Tools:** QR Code API, Nodemailer (for verification), JWT (Authentication)
+
+---
+
+## 📸 Screenshots
+
+_(Optional: You can add screenshots of your app here later)_
+
+---
+
+## 👤 Author
+
+**Salam Sodiq (DevYinka)**
+
+- Twitter: [@devyinka](https://twitter.com/devyinka)
+- GitHub: [@devyinka](https://github.com/devyinka)
+- LinkedIn: [Salam Sodiq](https://linkedin.com/in/your-url-here)
+-
