@@ -49,12 +49,6 @@ I engineered a custom algorithm to handle daily tracking efficiently:
 
 ---
 
-## 📸 Screenshots
-
-_(Optional: You can add screenshots of your app here later)_
-
----
-
 ## 👤 Author
 
 **Salam Sodiq (DevYinka)**
