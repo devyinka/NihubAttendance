@@ -7,7 +7,7 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_API": "@next_public_api",
-    "NEXT_PUBLIC_CLOUDINARY": "@next_public_cloudinary"
+    "NEXT_PUBLIC_API": "https://nihubattendancebackend-production.up.railway.app",
+    "NEXT_PUBLIC_CLOUDINARY": "https://api.cloudinary.com/v1_1/dnowbob2t/image/upload"
   }
 }
