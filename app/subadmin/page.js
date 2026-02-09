@@ -7,6 +7,11 @@ import Header from "@/public/src/components/AddEventPageComponents/header";
 import { useContext, useEffect, useState } from "react";
 import Input from "@/public/src/components/manageEventpagecomponents/forminput";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
+import {
+  useSubAdmins,
+  useCreateSubAdmin,
+  useDeleteSubAdmin,
+} from "@/app/hooks/useSubAdmin";
 
 const SubAdmin = () => {
   const API = process.env.NEXT_PUBLIC_API;
@@ -23,22 +28,23 @@ const SubAdmin = () => {
   const [showmodal, setshowmodal] = useState(false);
   const [deleteid, setdeleteid] = useState("");
   const [edit, setedit] = useState(false);
-  const [subadmin, setsubadmin] = useState([]);
+
+  // React Query hooks
+  const { data: subadminData, isLoading, error: queryError } = useSubAdmins();
+  const subadmin = subadminData || [];
+  const createSubAdminMutation = useCreateSubAdmin();
+  const deleteSubAdminMutation = useDeleteSubAdmin();
 
   useEffect(() => {
-    const getsubadmin = async () => {
-      try {
-        const Response = await axios.get(`${API}/getsubadmin`);
-        setsubadmin(Response.data);
-        seterror(Response.data?.Error);
-      } catch (error) {
-        seterror(error.message || "error fetching data");
-      }
+    if (queryError) {
+      seterror("Error fetching data");
+    }
+    if (isLoading) {
+      setloading(true);
+    } else {
       setloading(false);
-    };
-    getsubadmin();
-    console.log("subadmininfo", subadmin);
-  }, []);
+    }
+  }, [queryError, isLoading]);
 
   const handlelogout = () => {
     Navigation.push("./");
@@ -73,26 +79,16 @@ const SubAdmin = () => {
     setdeleteadmin({ ...deleteadmin, [deleteid]: true });
 
     try {
-      const Response = await axios.delete(`${API}/deletesubadmin`, {
-        data: { deleteid },
-      });
-      if (Response.data?.message) {
-        const newsubadminlist = subadmin.filter(
-          (Admin) => Admin._id !== deleteid
-        );
-        setsubadmin(newsubadminlist);
-        setsuccess(Response.data?.message);
-        setTimeout(() => setsuccess(""), 4000);
-      }
-      seterror(Response.data?.Error);
-      setloading(true);
+      await deleteSubAdminMutation.mutateAsync(deleteid);
+      setsuccess("Sub-admin deleted successfully");
+      setTimeout(() => setsuccess(""), 4000);
     } catch (error) {
-      seterror("unable to delete" + error.message);
+      seterror("Unable to delete: " + error.message);
       setsuccess("");
+    } finally {
       setloading(false);
+      setdeleteadmin({ ...deleteadmin, [deleteid]: false });
     }
-    setdeleteadmin({ ...deleteadmin, [deleteid]: false });
-    console.log(deleteid);
   };
 
   const handleCancleSubAdminCreate = (event) => {
@@ -107,7 +103,7 @@ const SubAdmin = () => {
   const handlesavesubadmin = async (event) => {
     event.preventDefault();
     if (!subadminfullname || !subadminemail || !subadminpassword) {
-      seterror("fill all the neccessary detail");
+      seterror("Fill all the necessary details");
       setsuccess("");
       return;
     }
@@ -116,21 +112,20 @@ const SubAdmin = () => {
     seterror("");
 
     try {
-      const Response = await axios.post(`${API}/createSubAdmin`, {
+      await createSubAdminMutation.mutateAsync({
         subadminfullname,
         subadminemail,
         subadminpassword,
       });
-
-      setsuccess(Response.data.message);
+      setsuccess("Sub-admin created successfully");
       setsubadminfullname("");
       setsubadminemail("");
       setsubadminpassword("");
-      setloading(false);
       setedit(false);
     } catch (error) {
-      seterror(error.response?.data?.Error || "unable to Add admin");
+      seterror(error.response?.data?.Error || "Unable to add admin");
       setsuccess("");
+    } finally {
       setloading(false);
     }
   };

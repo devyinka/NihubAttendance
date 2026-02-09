@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import style from "@/app/AdminLogin/page.module.css";
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
   const [Email, setEmail] = useState("");
 
   const handlebacktologin = () => {
-    Navigation.push("/AdminLogin"); //  i will later remove this
+    // Navigation handled by Link component
   };
 
   const handlesubmit = async () => {
@@ -78,34 +79,39 @@ const ForgotPassword = () => {
   return (
     <div>
       <Header info={"Super Admin Register"} />
-      <div>
+      {/* <div>
         <button className={style.backbotton} onClick={handlebacktologin}>
           Back to login
         </button>
-      </div>
-      <div className={style.container}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handlesubmit();
-          }}
-        >
-          <Input
-            type="email"
-            label="Registered Email"
-            value={Email}
-            setValue={setEmail}
-          />
-          <button type="submit" className={style.submit}>
-            {!loading ? "Reset Password" : "please wait..."}
-          </button>
-        </form>
-        {error && (
-          <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
-        )}
-        {success && (
-          <p style={{ color: "green", justifySelf: "center" }}>{success}</p>
-        )}
+      </div> */}
+      <div className="flex items-center justify-center fixed inset-0">
+        <div className="border border-[#7741c3] w-80 h-85 flex items-center justify-center flex-col rounded-lg p-4 bg-white shadow-lg">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handlesubmit();
+            }}
+          >
+            <Input
+              type="email"
+              label="Registered Email"
+              value={Email}
+              setValue={setEmail}
+            />
+            <button
+              type="submit"
+              className=" text-white bg-[#7741c3] font-mono text-xs font-normal mt-2 mb-1 rounded-md w-[90%] p-2 ml-5"
+            >
+              {!loading ? "Reset Password" : "please wait..."}
+            </button>
+          </form>
+          {error && (
+            <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
+          )}
+          {success && (
+            <p style={{ color: "green", justifySelf: "center" }}>{success}</p>
+          )}
+        </div>
       </div>
     </div>
   );

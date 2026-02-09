@@ -4,12 +4,20 @@ import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import style from "./ManageEvent.module.css";
 import Header from "@/public/src/components/AddEventPageComponents/header";
-import data from "@/public/src/components/AddEventPageComponents/backendresponsemock"; // mock data that serve as backend response
 import axios from "axios";
 import Input from "@/public/src/components/manageEventpagecomponents/forminput";
 import DescribeInput from "@/public/src/components/manageEventpagecomponents/Descriptioninput";
 import Scroll from "@/public/src/components/scroll";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
+import {
+  useEvents,
+  useStudentCounts,
+  useUpdateEvent,
+  useUpdateEventStatus,
+  useDeleteEvent,
+  useDeleteTrack,
+  useUpdateTrack,
+} from "@/app/hooks/useEvents";
 
 const ManageEvent = () => {
   const API = process.env.NEXT_PUBLIC_API;
@@ -19,7 +27,7 @@ const ManageEvent = () => {
   const CLOUDINARY_URL = process.env.NEXT_PUBLIC_CLOUDINARY;
 
   let [button, setbutton] = useState("manage");
-  const [Events, setEvents] = useState([]);
+  const [mounted, setMounted] = useState(false);
   const [editevent, seteditevent] = useState(false);
   const [eventname, seteventname] = useState("");
   const [eventlocation, seteventlocation] = useState("");
@@ -42,7 +50,22 @@ const ManageEvent = () => {
   const [edittrackid, setedittrackid] = useState(""); // edit trackid
   const [edittrackname, setedittrackname] = useState("");
   const [edittrackabrevation, setedittrackabrevation] = useState("");
-  const [eventCounts, setEventCounts] = useState({});
+
+  // React Query hooks for data fetching and mutations
+  const {
+    data: eventsData,
+    isLoading: eventsLoading,
+    error: eventsError,
+  } = useEvents();
+  const Events = eventsData?.data || [];
+  const eventIds = Events.map((evt) => evt._id);
+  const { data: eventCounts = {} } = useStudentCounts(eventIds);
+
+  const updateEventMutation = useUpdateEvent();
+  const updateEventStatusMutation = useUpdateEventStatus();
+  const deleteEventMutation = useDeleteEvent();
+  const deleteTrackMutation = useDeleteTrack();
+  const updateTrackMutation = useUpdateTrack();
 
   const uploadImage = async (file) => {
     const formdata = new FormData();
@@ -61,60 +84,29 @@ const ManageEvent = () => {
     }
   };
 
+  // Prevent hydration mismatch
   useEffect(() => {
-    const GetEvents = async () => {
-      setloading(true);
-
-      try {
-        const response = await axios.get(`${API}/GetEvents`);
-        const info = response.data;
-        if (info.data.length === 0) {
-          seterror("No event available at the moment");
-          setsuccess("");
-          setloading(false);
-          return;
-        } else {
-          setEvents(info.data);
-          setsuccess(response.data?.message || "Events fetched successfully");
-          seterror("");
-          setloading(false);
-        }
-      } catch (erro) {
-        seterror("fail to get data frombackend data", erro);
-        setsuccess("");
-        setloading(false);
-      }
-    };
-    GetEvents();
+    setMounted(true);
   }, []);
 
-  // fetch student counts per event
+  // Handle loading and error states from React Query
   useEffect(() => {
-    const fetchCounts = async () => {
-      if (!Events || Events.length === 0) return;
-      try {
-        const entries = await Promise.all(
-          Events.map(async (evt) => {
-            try {
-              const resp = await axios.get(
-                `${API}/GetNumberOfStudentsOnevent`,
-                {
-                  params: { eventid: evt._id },
-                }
-              );
-              return [evt._id, resp?.data.studentcount ?? 0];
-            } catch (err) {
-              return [evt._id, 0];
-            }
-          })
-        );
-        setEventCounts(Object.fromEntries(entries));
-      } catch (_) {
-        // ignore aggregate errors
+    if (eventsLoading) {
+      setloading(true);
+    } else {
+      setloading(false);
+      if (eventsError) {
+        seterror("Failed to fetch events");
+        setsuccess("");
+      } else if (Events.length === 0) {
+        seterror("No event available at the moment");
+        setsuccess("");
+      } else {
+        setsuccess(eventsData?.message || "Events fetched successfully");
+        seterror("");
       }
-    };
-    fetchCounts();
-  }, [API, Events]);
+    }
+  }, [eventsLoading, eventsError, Events, eventsData]);
   //
   const handlelogout = async () => {
     setloading(true);
@@ -165,32 +157,21 @@ const ManageEvent = () => {
   // to handle status change of event open or close
   const handlestatuschange = async (eventid) => {
     setloading(true);
-    const update = Events.map((result) => {
-      if (result._id == eventid) {
-        return { ...result, eventstatus: !result.eventstatus };
-      }
-      return result;
-    });
+    const currentEvent = Events.find((evt) => evt._id === eventid);
+    const newStatus = !currentEvent.eventstatus;
 
-    // setEvents(update);
     try {
-      const response = await axios.put(`${API}/UpdateEventStatus`, {
+      await updateEventStatusMutation.mutateAsync({
         eventid,
-        status: update.find((item) => item._id === eventid).eventstatus,
-        // status: Events.find((item) => item._id === statusid).eventstatus,
+        status: newStatus,
       });
-      if (response.data.message) {
-        setsuccess(response.data.message);
-      }
+      setsuccess("Event status updated successfully");
       seterror("");
-      setloading(false);
-      setEvents(update); // update state with new status
-      return;
     } catch (error) {
-      seterror("");
+      seterror("Failed to update event status");
       setsuccess("");
+    } finally {
       setloading(false);
-      return;
     }
   };
   //
@@ -217,26 +198,16 @@ const ManageEvent = () => {
     };
 
     try {
-      const Response = await axios.put(`${API}/UpdateEvent`, {
+      await updateEventMutation.mutateAsync({
         id: editedeventid,
         Public_id,
         editedEvent,
       });
-      if (Response.data.message) {
-        setsuccess(Response.data.message);
-        seterror("");
-        setloading(false);
-        setEvents((prevEvents) =>
-          prevEvents.map((prev) =>
-            prev._id === editedeventid ? Response.data.data : prev
-          )
-        );
-      }
+      setsuccess("Event updated successfully");
       seterror("");
-      setloading(false);
     } catch (error) {
-      seteventname("");
-      setloading(false);
+      seterror("Failed to update event");
+      setsuccess("");
     } finally {
       seteventname("");
       seteventdate("");
@@ -266,21 +237,14 @@ const ManageEvent = () => {
   const handledeletevent = async (eventid) => {
     setdeleteevent({ ...deleteevent, [eventid]: true });
 
-    const updated = Events.filter((eventinfo) => eventinfo._id !== eventid);
     try {
-      const response = await axios.delete(`${API}/DeleteEvent`, {
-        data: { eventid },
-      });
-
-      if (response.data.message) {
-        setsuccess(response.data.message);
-        seterror("");
-        setEvents(updated);
-        setloading(false);
-      }
+      await deleteEventMutation.mutateAsync(eventid);
+      setsuccess("Event deleted successfully");
+      seterror("");
     } catch (error) {
-      seterror("unable to delete", error);
+      seterror("Failed to delete event");
       setsuccess("");
+    } finally {
       setloading(false);
     }
   };
@@ -307,30 +271,13 @@ const ManageEvent = () => {
   const handledeletetrack = async (selectedDeleteEventid, deletetrackid) => {
     setLoadingTrack((prev) => ({ ...prev, [deletetrackid]: true }));
 
-    const updatedEvents = Events.map((evt) => {
-      if (evt._id === selectedDeleteEventid) {
-        return {
-          ...evt,
-          eventtracks: evt.eventtracks.filter(
-            (track) => track._id != deletetrackid
-          ),
-        };
-      }
-      return evt;
-    });
-
     try {
-      const Response = await axios.delete(`${API}/DeleteTrack`, {
-        data: {
-          eventid: selectedDeleteEventid,
-          trackid: deletetrackid,
-        },
+      await deleteTrackMutation.mutateAsync({
+        eventid: selectedDeleteEventid,
+        trackid: deletetrackid,
       });
-      if (Response.data.message) {
-        setEvents(updatedEvents);
-        setsuccess(Response.data.message);
-        seterror("");
-      }
+      setsuccess("Track deleted successfully");
+      seterror("");
     } catch (err) {
       seterror("Unable to delete the track: " + err.message);
       setsuccess("");
@@ -359,39 +306,18 @@ const ManageEvent = () => {
   //  track edited saved functionality
   const handlesavetrackedit = async () => {
     setloading(true);
-    const update = Events.map((result) => {
-      const updatedTracks = result.eventtracks.map((trackinfo) => {
-        if (trackinfo._id === edittrackid && result._id === editedeventid) {
-          return {
-            ...trackinfo,
-            trackName: edittrackname,
-            trackAbbreviation: edittrackabrevation,
-          };
-        }
-
-        return trackinfo;
-      });
-      // return the event with updated tracks
-      return { ...result, eventtracks: updatedTracks };
-    });
 
     try {
-      const Response = await axios.put(`${API}/UpdateEventTracks`, {
+      await updateTrackMutation.mutateAsync({
         eventid: editedeventid,
         trackid: edittrackid,
         trackName: edittrackname,
-        trackAbbreviation: edittrackabrevation,
+        trackabrevation: edittrackabrevation,
       });
-      if (Response.data.message) {
-        setEvents(update);
-        setsuccess(Response.data.message);
-        seterror("");
-      }
-
-      setloading(false);
+      setsuccess("Track updated successfully");
+      seterror("");
     } catch (error) {
-      seterror("unable to update", error);
-      setloading(false);
+      seterror("Unable to update track");
       setsuccess("");
     } finally {
       setedittrackabrevation("");
@@ -402,6 +328,10 @@ const ManageEvent = () => {
       setloading(false);
     }
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div>
@@ -494,7 +424,7 @@ const ManageEvent = () => {
                 const tracks = result.eventtracks;
                 return (
                   <div key={result._id} className={style.list}>
-                    <div style={{ display: "flex" }}>
+                    <div className={style.eventrow}>
                       <h3 className={style.eventname}>{result.eventname}</h3>
                       <h3 className={style.date}>{result.eventdate}</h3>
                       <h3 className={style.register}>
@@ -510,7 +440,8 @@ const ManageEvent = () => {
                       >
                         {result.eventstatus ? "open" : "closed"}
                       </button>
-                      <button className={style.edit}>
+
+                      <button className="ml-7 w-[10%] justify-self-center border-radius[10px] mb-1 flex items-center justify-center">
                         <Image
                           src="./edit.svg"
                           alt=""
@@ -519,7 +450,7 @@ const ManageEvent = () => {
                           onClick={() => handleedit(result._id)}
                         />
                       </button>
-                      <button className={style.delete}>
+                      <button className="ml-12 w-[10%] justify-self-center border-radius[10px] mb-1 flex items-center justify-center">
                         {!deleteevent[result._id] ? (
                           <Image
                             src="./delete.svg"
@@ -741,17 +672,3 @@ const ManageEvent = () => {
 };
 
 export default ManageEvent;
-
-// const update = Events.map((result) => {
-//   if (result._id == editedeventid) {
-//     return {
-//       ...result,
-//       name: eventname,
-//       imageurl: eventimageurl,
-//       programDescription: eventdescribe,
-//       Register: eventcapacity,
-//       date: eventdate,
-//     };
-//   }
-//   return result;
-// });

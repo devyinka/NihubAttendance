@@ -3,8 +3,8 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
+import { useMarkAttendance } from "@/app/hooks/useAttendance";
 
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
 import { Attendancecontex } from "@/public/src/components/Attendancepagecomponents/Attendancecontex";
@@ -14,12 +14,10 @@ import ActiveScannerScreen from "@/public/src/components/ScannerPageComponent/Ac
 import style from "./scanner.module.css";
 
 const Scanner = () => {
-  const API = process.env.NEXT_PUBLIC_API;
   const { selectedtrackid, selectedeventid } = useContext(Attendancecontex);
   const router = useRouter();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const [qrActive, setQrActive] = useState(false);
 
   const [studentInfo, setStudentInfo] = useState({
@@ -31,6 +29,10 @@ const Scanner = () => {
   });
 
   const scannerRef = useRef(null);
+  
+  // React Query mutation for marking attendance
+  const markAttendanceMutation = useMarkAttendance();
+  const loading = markAttendanceMutation.isPending;
 
   const handleLogout = () => router.push("/");
 
@@ -47,35 +49,31 @@ const Scanner = () => {
   const resetStatus = () => {
     setMessage("");
     setError("");
-    setLoading(false);
   };
 
   const handleScan = async (decodedText) => {
     if (loading) return;
 
     resetStatus();
-    setLoading(true);
 
     try {
-      const Response = await axios.post(`${API}/MarkAttendance`, {
-        studentid: decodedText,
-        selectedeventid,
-        selectedtrackid,
+      const response = await markAttendanceMutation.mutateAsync({
+        qrCodeData: decodedText,
+        eventid: selectedeventid,
+        trackid: selectedtrackid,
       });
 
-      setMessage(Response.data?.message);
+      setMessage(response?.message || "Attendance marked successfully");
       setStudentInfo({
-        student_name: Response.data?.data.student_name,
-        student_matricnumber: Response.data?.data.student_matricnumber,
-        student_imageurl: Response.data?.data.student_imageurl,
-        markedAt: Response.data?.data.markedAt,
-        alreadyMarked: Response.data?.alreadyMarked,
+        student_name: response?.data?.student_name || "",
+        student_matricnumber: response?.data?.student_matricnumber || "",
+        student_imageurl: response?.data?.student_imageurl || "",
+        markedAt: response?.data?.markedAt || null,
+        alreadyMarked: response?.alreadyMarked || false,
       });
     } catch (err) {
-      setError(err.response?.data?.error || "Scan failed");
+      setError(err.response?.data?.error || err.message || "Scan failed");
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {

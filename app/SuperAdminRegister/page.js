@@ -16,7 +16,7 @@ const SuperAdminRegister = () => {
   const [Username, setUsername] = useState("");
 
   const handlebacktologin = () => {
-    Navigation.push("/AdminLogin"); //  i will later remove this
+    // Navigation handled by Link component
   };
 
   const handlesubmit = async () => {
@@ -61,34 +61,45 @@ const SuperAdminRegister = () => {
   return (
     <div>
       <Header info={"Super Admin Register"} />
-      <div>
+      {/* <div>
         <button className={style.backbotton} onClick={handlebacktologin}>
           Back to login
         </button>
-      </div>
-      <div className={style.container}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault(), handlesubmit();
-          }}
-        >
-          <Input type="email" label="Email" value={Email} setValue={setEmail} />
-          <Input
-            type="text"
-            label="Username"
-            value={Username}
-            setValue={setUsername}
-          />
-          <button type="submit" className={style.submit}>
-            {!loading ? "Register" : "please wait..."}
-          </button>
-        </form>
-        {error && (
-          <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
-        )}
-        {success && (
-          <p style={{ color: "green", justifySelf: "center" }}>{success}</p>
-        )}
+      </div> */}
+      <div className="flex items-center justify-center fixed inset-0">
+        <div className="border border-[#7741c3]  w-80 md:w-120 h-85 flex items-center justify-center flex-col rounded-lg p-4 bg-white shadow-lg">
+          <form
+            className="lg:w-90"
+            onSubmit={(e) => {
+              e.preventDefault(), handlesubmit();
+            }}
+          >
+            <Input
+              type="email"
+              label="Email"
+              value={Email}
+              setValue={setEmail}
+            />
+            <Input
+              type="text"
+              label="Username"
+              value={Username}
+              setValue={setUsername}
+            />
+            <button
+              type="submit"
+              className=" text-white bg-[#7741c3] font-mono text-xs font-normal mt-2 mb-1 rounded-md w-[90%] p-2 ml-5"
+            >
+              {!loading ? "Register" : "please wait..."}
+            </button>
+          </form>
+          {error && (
+            <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
+          )}
+          {success && (
+            <p style={{ color: "green", justifySelf: "center" }}>{success}</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
 import style from "@/app/AdminLogin/page.module.css";
 import Input from "@/public/src/components/AdminLoginpageComponents/Forminput";
@@ -20,14 +21,14 @@ const AdminRegisterpage = () => {
   const [re_enterpassword, set_re_enterpassword] = useState("");
   const [email, setemail] = useState(Useremail || "");
   const [verificationCode, setverificationCode] = useState(
-    Userverificationcode || ""
+    Userverificationcode || "",
   );
   const [loading, setloading] = useState(false);
   const [error, seterror] = useState("");
   const [Success, setSucess] = useState("");
 
   const handlegoback = () => {
-    Navigation.push("./AdminLogin");
+    // Navigation handled by Link component
   };
 
   const handlesubmit = async (event) => {
@@ -99,54 +100,64 @@ const AdminRegisterpage = () => {
   return (
     <div>
       <Header info={"Register Admin"} />
-      <div>
+      {/* <div>
         <button className={style.backbotton} onClick={handlegoback}>
           Back to Login
         </button>
-      </div>
-      <div className={style.container}>
-        <h2 className={style.Login}>Register New Admin</h2>
-        <h6 className={style.subtitle}>Register New Admin </h6>
-        <form>
-          <Input
-            type="text"
-            label="User name"
-            value={username}
-            setValue={setusername}
-          />
-          <Input type="email" label="Email" value={email} setValue={setemail} />
-          <Input
-            type="text"
-            label="Verification-Code"
-            value={verificationCode}
-            setValue={setverificationCode}
-          />
-          <Input
-            type="password"
-            label="password"
-            value={password}
-            setValue={setPassword}
-          />
-          <Input
-            type="password"
-            label="confirm-password"
-            value={re_enterpassword}
-            setValue={set_re_enterpassword}
-          />
-          <h2 className={style.subtitle}>
-            Ensure the password is up to 6 or 8 characters
-          </h2>
-          <button type="submit" className={style.submit} onClick={handlesubmit}>
-            {" "}
-            {!loading ? "Register new Admin" : "please wait..."}
-          </button>
-          {error && (
-            <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
-          )}
-          {Success && (
-            <p style={{ color: "green", justifySelf: "center" }}>{Success}</p>
-          )}
-        </form>
+      </div> */}
+      <div className=" flex items-center justify-center fixed inset-0">
+        <div className="border border-[#7741c3]  w-80 md:w-120 h-130 flex items-center justify-center flex-col rounded-lg p-4 bg-white shadow-lg">
+          <h2 className="mt-3 text-[#7741c3]">Register New Admin</h2>
+          <form>
+            <Input
+              type="text"
+              label="User name"
+              value={username}
+              setValue={setusername}
+            />
+            <Input
+              type="email"
+              label="Email"
+              value={email}
+              setValue={setemail}
+            />
+            <Input
+              type="text"
+              label="Verification-Code"
+              value={verificationCode}
+              setValue={setverificationCode}
+            />
+            <Input
+              type="password"
+              label="password"
+              value={password}
+              setValue={setPassword}
+            />
+            <Input
+              type="password"
+              label="confirm-password"
+              value={re_enterpassword}
+              setValue={set_re_enterpassword}
+            />
+            <h2 className={style.subtitle}>
+              Ensure the password is up to 6 or 8 characters
+            </h2>
+            <button
+              type="submit"
+              className={style.submit}
+              onClick={handlesubmit}
+            >
+              {" "}
+              {!loading ? "Register new Admin" : "please wait..."}
+            </button>
+            {error && (
+              <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
+            )}
+            {Success && (
+              <p style={{ color: "green", justifySelf: "center" }}>{Success}</p>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

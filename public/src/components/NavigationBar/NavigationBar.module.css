@@ -1,0 +1,25 @@
+.buttonscontainer {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.buttonscontainer a {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #6b7280;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.buttonscontainer a:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.buttonscontainer a.Active {
+  background-color: #7741c3;
+  color: white;
+}

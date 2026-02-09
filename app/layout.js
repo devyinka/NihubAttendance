@@ -1,8 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Poppins,
+  Noto_Sans_Canadian_Aboriginal,
+} from "next/font/google";
 import "./globals.css";
-// import Home from "./page";
-import { Attendancecontexprovider } from "@/public/src/components/Attendancepagecomponents/Attendancecontex";
-import { Rolecontexprovider } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
+import { Providers } from "./providers";
+import LoadingBar from "@/public/src/components/LoadingBar";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,12 +28,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <Rolecontexprovider>
-        <Attendancecontexprovider>
-        {children}
-        </Attendancecontexprovider>
-        </Rolecontexprovider>
+        <LoadingBar />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

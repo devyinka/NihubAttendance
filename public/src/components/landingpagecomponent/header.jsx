@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import style from "./header.module.css";
 
 const Header = ({ info }) => {
   const Navigation = useRouter();
@@ -10,11 +9,7 @@ const Header = ({ info }) => {
     Navigation.push("./AdminLogin");
   };
   return (
-    <div className=" flex h-[20%] justify-between m-1">
-      {/* width: 153.906px;
-height: 28px;
-align-items: center;
-gap: 8px; */}
+    <div className="flex h-[20%] justify-between m-1">
       <div className="">
         <Image
           src="/logo.png"
@@ -25,7 +20,10 @@ gap: 8px; */}
         />
       </div>
       <div className=" bg-[#7741C3] rounded-lg px-1 mr-1 sm:">
-        <button className="text-xs text-white" onClick={handledmin}>
+        <button
+          className="text-xs text-white cursor-pointer"
+          onClick={handledmin}
+        >
           {" "}
           {info}
         </button>

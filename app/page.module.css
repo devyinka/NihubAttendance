@@ -28,40 +28,6 @@
   justify-self: center;
   justify-items: center;
 }
-.eventcontainer {
-  justify-self: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  justify-content: space-evenly;
-  justify-items: space-evenly;
-  margin-top: 0;
-  width: 55%;
-  height: 50%;
-  background: white;
-  /* margin-top: 6px; */
-  margin-top: -1%;
-}
-
-.textheading {
-  color: blueviolet;
-  text-align: center;
-  font-family: Arial;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 20px;
-  justify-content: center;
-}
-.subheading {
-  color: #7741c3;
-  text-align: center;
-  font-family: Arial;
-  font-size: 65%;
-  font-style: normal;
-  font-weight: 200;
-  line-height: 24px; /* 150% */
-}
 
 .wellcomeContainer {
   display: flex;
@@ -93,4 +59,15 @@
   font-weight: 400;
   line-height: 150%;
   padding-left: 2%;
+}
+
+.eventcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px 20px;
+  background-color: #f9fafb;
+  width: 100%;
 }

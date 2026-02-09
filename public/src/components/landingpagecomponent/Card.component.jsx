@@ -12,18 +12,21 @@ const EventRegistration = ({ data }) => {
         key={event._id}
         className="w-40 md:w-50  lg:w-68 bg-[#F9FAFB] rounded-lg p-4 mx-0.2 shadow-lg hover:shadow-xs transition-shadow duration-300 mt-10"
       >
-        <Image src={event.eventimageurl} alt="image" height={100} width={236} />
+        <Image
+          src={event.eventimageurl}
+          alt="image"
+          height={100}
+          width={236}
+          unoptimized
+        />
         <h2 className=" text-[#7741c3] text-center text-xs font-mono m-1">
           {event.eventname}
         </h2>
         <div className="flex flex-wrap text-start text-xs h-30 overflow-hidden text-ellipsis my-2 p-2 bg-[#7741C3] text-white rounded-md">
           <h5>{event.eventdescription}</h5>
         </div>
-        {/* display: flex; align-items: center; font-size: 60%; gap: 5; */}
         <div className="flex items-center  text-xs gap-2 lg:mt-2 md:mt-2 lg:mb-1 md:mb-1 my-0.2">
           <Image src="/calender.svg" alt="" height={25} width={10} />
-          {/* color: #7741c3; font-family: Arial; font-size: 80%; font-style:
-          normal; font-weight: 400; line-height: 40%;  */}
           <h4 className="text-[#7741c3] font-mono text-xs ">
             {event.eventdate}
           </h4>

@@ -12,6 +12,13 @@ import Scroll from "@/public/src/components/scroll";
 import { Attendancecontex } from "@/public/src/components/Attendancepagecomponents/Attendancecontex";
 import { useContext } from "react";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
+import Link from "next/link";
+import {
+  useDailyAttendance,
+  useMarkAllPresent,
+  useAttendanceExport,
+  useDeleteStudentsByEventAndTrack,
+} from "@/app/hooks/useAttendance";
 
 const Attendance = () => {
   const API = process.env.NEXT_PUBLIC_API;
@@ -32,28 +39,28 @@ const Attendance = () => {
   const [search, setsearch] = useState("");
   const [showmodal, setshowmodal] = useState(false);
 
-  useEffect(() => {
-    const fetchStudentData = async () => {
-      try {
-        if (!selectedeventid) return; // Don't fetch if no event selected
+  // React Query hooks
+  const {
+    data: attendanceData,
+    isLoading,
+    error: queryError,
+  } = useDailyAttendance(selectedeventid, selectedtrackid);
+  const markAllPresentMutation = useMarkAllPresent();
+  const exportAttendanceMutation = useAttendanceExport();
+  const deleteStudentsMutation = useDeleteStudentsByEventAndTrack();
 
-        const response = await axios.get(`${API}/GetDailyAttendanceInfo`, {
-          params: {
-            eventid: selectedeventid,
-            trackid: selectedtrackid || undefined,
-          },
-        });
-        const data = response.data;
-        setstudentinfo(data.data);
-      } catch (error) {
-        seterror("unable to find student record", error);
-      }
-    };
-    fetchStudentData();
-  }, [selectedeventid, selectedtrackid]);
+  // Sync React Query data with context
+  useEffect(() => {
+    if (attendanceData) {
+      setstudentinfo(attendanceData);
+    }
+    if (queryError) {
+      seterror("Unable to find student record");
+    }
+  }, [attendanceData, queryError, setstudentinfo, seterror]);
 
   const present = studentinfo.filter(
-    (data) => data.student_attendance_status === "present"
+    (data) => data.student_attendance_status === "present",
   );
   const Absent =
     studentinfo.length > present.length
@@ -89,26 +96,28 @@ const Attendance = () => {
     setbutton(change);
   };
 
-  const markallstudentpresent = async () => {
-    const updated = studentinfo.map((student) => ({
-      ...student,
-      student_attendance_status: "present",
-    }));
+  // const markallstudentpresent = async () => {
+  //   try {
+  //     await markAllPresentMutation.mutateAsync({
+  //       selectedeventid,
+  //       selectedtrackid: selectedtrackid || undefined,
+  //     });
+  //     // Data will be automatically refetched by React Query
+  //   } catch (error) {
+  //     seterror("Unable to mark the attendance");
+  //   }
+  // };
 
-    // setstudentinfo(updated);
-
+  const Deleteallstudentintrackandevent = async () => {
     try {
-      const response = await axios.post(`${API}/MarkAllPresent`, {
+      await deleteStudentsMutation.mutateAsync({
         eventid: selectedeventid,
         trackid: selectedtrackid || undefined,
       });
-
-      if (response.data && response.data.message) {
-        // Optionally update local state if needed
-        setstudentinfo(updated);
-      }
+      seterror("");
+      // Data will be automatically refetched by React Query
     } catch (error) {
-      seterror("unable to mark the attendance");
+      seterror("Unable to delete the students");
     }
   };
 
@@ -116,17 +125,17 @@ const Attendance = () => {
     setshowmodal(true);
   };
 
-  const confirmMarkAllPresent = () => {
-    markallstudentpresent();
+  // const confirmMarkAllPresent = () => {
+  //   markallstudentpresent();
+  //   setshowmodal(false);
+  // };
+  const confirmdeleteallstudentintrackandevent = () => {
+    Deleteallstudentintrackandevent();
     setshowmodal(false);
   };
 
   const modalcancle = () => {
     setshowmodal(false);
-  };
-
-  const NavigateToScanner = () => {
-    Navigation.push("./Scanner");
   };
 
   const downloadBroadsheet = async () => {
@@ -139,11 +148,11 @@ const Attendance = () => {
             trackid: selectedtrackid || undefined,
           },
           responseType: "blob",
-        }
+        },
       );
 
       const url = window.URL.createObjectURL(
-        new Blob([response.data], { type: "application/pdf" })
+        new Blob([response.data], { type: "application/pdf" }),
       );
 
       const link = document.createElement("a");
@@ -238,9 +247,9 @@ const Attendance = () => {
         <div className={style.box}>
           <div className={style.scan}>
             <h3 className={style.takeattendance}>Take attendance</h3>
-            <button className={style.scan1} onClick={NavigateToScanner}>
+            <Link href="/Scanner" className={style.scan1} prefetch={true}>
               scan QR Code
-            </button>
+            </Link>
           </div>
           <div className={style.headercontainer}>
             <div style={{ display: "flex", flex: "4%" }}>
@@ -263,7 +272,7 @@ const Attendance = () => {
               onClick={showmodalformarkallconfirrmation}
             >
               {" "}
-              mark all present
+              Delete Students
             </button>
             <button className={style.download} onClick={downloadBroadsheet}>
               <Image src="/download.svg" alt="" width={10} height={10} />
@@ -307,10 +316,11 @@ const Attendance = () => {
         <div className={style.confirmdelete}>
           <h2 className={style.warning}>
             {" "}
-            Are you sure you want to mark them all present
+            Are you sure you want to delete all the students in this track? This
+            action cannot be undone.{" "}
           </h2>
           <button
-            onClick={confirmMarkAllPresent}
+            onClick={confirmdeleteallstudentintrackandevent}
             className={style.deletebutton}
           >
             Yes

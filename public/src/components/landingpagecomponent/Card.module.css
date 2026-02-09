@@ -13,35 +13,4 @@
   width: 95%;
   background-color: #7741c3;
 }
-.eventname {
-  color: #7741c3;
-  font-family: Arial;
-  font-size: 90%;
-  font-style: normal;
-  font-weight: 60%;
-  line-height: 60%;
-  margin: 5%;
-  text-align: center;
-}
-.subtitle {
-  /* color: #717182; */
-  color: #7741c3;
-  font-family: Arial;
-  font-size: 80%;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 40%;
-}
 
-.container {
-  display: flex;
-  align-items: center;
-  font-size: 60%;
-  gap: 5;
-}
-
-@media (max-width: 768px) {
-  .eventname {
-    font-size: 45%;
-  }
-}
