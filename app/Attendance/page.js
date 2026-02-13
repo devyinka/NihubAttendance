@@ -96,18 +96,6 @@ const Attendance = () => {
     setbutton(change);
   };
 
-  // const markallstudentpresent = async () => {
-  //   try {
-  //     await markAllPresentMutation.mutateAsync({
-  //       selectedeventid,
-  //       selectedtrackid: selectedtrackid || undefined,
-  //     });
-  //     // Data will be automatically refetched by React Query
-  //   } catch (error) {
-  //     seterror("Unable to mark the attendance");
-  //   }
-  // };
-
   const Deleteallstudentintrackandevent = async () => {
     try {
       await deleteStudentsMutation.mutateAsync({
@@ -125,10 +113,6 @@ const Attendance = () => {
     setshowmodal(true);
   };
 
-  // const confirmMarkAllPresent = () => {
-  //   markallstudentpresent();
-  //   setshowmodal(false);
-  // };
   const confirmdeleteallstudentintrackandevent = () => {
     Deleteallstudentintrackandevent();
     setshowmodal(false);

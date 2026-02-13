@@ -28,8 +28,8 @@ const Scanner = () => {
     alreadyMarked: false,
   });
 
-  const scannerRef = useRef(null);
-  
+  // const scannerRef = useRef(null);
+
   // React Query mutation for marking attendance
   const markAttendanceMutation = useMarkAttendance();
   const loading = markAttendanceMutation.isPending;
@@ -88,7 +88,7 @@ const Scanner = () => {
         (decodedText) => {
           scanner.stop();
           handleScan(decodedText);
-        }
+        },
       )
       .catch((err) => {
         setError("Unable to start camera: " + err?.message);
