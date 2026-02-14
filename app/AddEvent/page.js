@@ -34,33 +34,6 @@ const AddEvent = () => {
   const [loading, setloading] = useState(false);
   const [dropdown, setdropdown] = useState(false);
 
-  let id = 0;
-
-  // const handleAttendancepage = (change) => {
-  //   Navigation.push("./Attendance");
-  //   setbutton(change);
-  // };
-
-  // const handlecreatepage = (change) => {
-  //   Navigation.push("./AddEvent");
-  //   setbutton(change);
-  // };
-
-  // const handlemanagepage = (change) => {
-  //   Navigation.push("./ManageEvent");
-  //   setbutton(change);
-  // };
-
-  // const handlesubadmnpage = (change) => {
-  //   Navigation.push("./subadmin");
-  //   setbutton(change);
-  // };
-
-  // const handlelogout = () => {
-  //   Navigation.push("./");
-  // };
-
-  //handle form dropdown to add tracks of the evet
   const handledropdown = () => {
     setdropdown(!dropdown);
   };
@@ -179,9 +152,11 @@ const AddEvent = () => {
         setActiveButton={setbutton}
       />
       <Scroll>
-        <div className={style.formcontainer}>
-          <h3 className={style.create}>Create New Event</h3>
-          <h1 className={style.createsubtitle}>
+        <div className="mt-2 pt-0.8% mx-4 lg:mx-8 md:mx-6 mb-0.5% rounded-lg border border-gray-200 bg-white">
+          <h3 className="text-[#7741c3] font-bold text-xl  pl-5 mb-1 font-mono">
+            Create New Event
+          </h3>
+          <h1 className="text-gray-500 text-sm mb-4 font-mono pl-5">
             Add a new event to the platform
           </h1>
           <form
@@ -189,9 +164,9 @@ const AddEvent = () => {
               e.preventDefault();
               handlsaveevent();
             }}
-            className={style.form}
+            className="space-y-4"
           >
-            <div className={style.inputcontainer}>
+            <div className="ml-2 flex flex-wrap justify-between space-x-2 w-[80%] lg:w-[96.5%] ">
               <Input
                 type="text"
                 label="Event tilte"
@@ -205,13 +180,15 @@ const AddEvent = () => {
                 setValue={seteventdate}
               />
             </div>
-            <DescribeInput
-              type="text"
-              label="Description"
-              value={eventdescription}
-              setValue={seteventdescription}
-            />
-            <div className={style.inputcontainer}>
+            <div className=" justify-between w-[80%] lg:w-[101%] ">
+              <DescribeInput
+                type="text"
+                label="Description"
+                value={eventdescription}
+                setValue={seteventdescription}
+              />
+            </div>
+            <div className="ml-2 flex flex-wrap justify-between space-x-2 w-[80%] lg:w-[96.5%] ">
               <Input
                 type="text"
                 label="Event location"
@@ -225,9 +202,11 @@ const AddEvent = () => {
                 setValue={seteventcapacity}
               />
             </div>
-            <div className={style.inputcontainer2}>
-              <label className={style.eventimagetitle}>chose event image</label>
-              <div className={style.eventimagesubtitle}>
+            <div className="ml-2">
+              <label className="text-[#7741c3] font-medium font-family-mono text-sm  mb-1">
+                Choose event image
+              </label>
+              <div className="border border-gray-300 rounded-md  w-[80%] lg:w-[97%] bg-[#f3f3f5]  ">
                 <input
                   type="file"
                   accept="image/*"
@@ -235,39 +214,35 @@ const AddEvent = () => {
                 />
               </div>
             </div>
-            <div className={style.inputcontainer3}>
+            <div className="flex justify-between w-90">
               <button
                 type="button"
-                className={style.button}
+                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
                 onClick={handledropdown}
               >
                 create track
               </button>
-              <button className={style.button} type="submit">
+              <button
+                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
+                type="submit"
+              >
                 {!loading ? "Create Event" : "please wait.."}
               </button>
             </div>
           </form>
-
           {dropdown ? (
-            <div className={style.trackform}>
-              <div className={style.dropdowncontainer}>
+            <div className="mt-4 border-t border-gray-300 pt-4">
+              <div className="flex justify-between w-full">
                 <Input
                   type="text"
                   label="Trackname"
                   value={trackname}
                   setValue={settrackname}
                 />
-                {/* <Input
-                  type="text"
-                  label="Track Abbrevation"
-                  value={trackabbrivation}
-                  setValue={settrackabbrvation}
-                /> */}
               </div>
               <button
                 type="button"
-                className={style.button2}
+                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
                 onClick={handleaddtrack}
               >
                 Add track
@@ -275,8 +250,8 @@ const AddEvent = () => {
             </div>
           ) : null}
         </div>
-        {error && <p className={style.error}>{error}</p>}
-        {success && <p className={style.success}>{success}</p>}
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
       </Scroll>
     </div>
   );
