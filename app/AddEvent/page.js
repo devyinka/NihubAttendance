@@ -166,21 +166,25 @@ const AddEvent = () => {
             }}
             className="space-y-4"
           >
-            <div className="ml-2 flex flex-wrap justify-between space-x-2 w-[80%] lg:w-[96.5%] ">
-              <Input
-                type="text"
-                label="Event tilte"
-                value={eventname}
-                setValue={seteventname}
-              />
-              <Input
-                type="date"
-                label="Event date"
-                value={eventdate}
-                setValue={seteventdate}
-              />
+            <div className="ml-2 flex flex-wrap -mx-2 w-[80%] lg:w-[96.5%]">
+              <div className="w-full md:w-1/2 px-2">
+                <Input
+                  type="text"
+                  label="Event tilte"
+                  value={eventname}
+                  setValue={seteventname}
+                />
+              </div>
+              <div className="w-full md:w-1/2 px-2">
+                <Input
+                  type="date"
+                  label="Event date"
+                  value={eventdate}
+                  setValue={seteventdate}
+                />
+              </div>
             </div>
-            <div className=" justify-between w-[80%] lg:w-[101%] ">
+            <div className="lg:w-[96.5%] ml-2 px-2 w-[79%]">
               <DescribeInput
                 type="text"
                 label="Description"
@@ -188,25 +192,29 @@ const AddEvent = () => {
                 setValue={seteventdescription}
               />
             </div>
-            <div className="ml-2 flex flex-wrap justify-between space-x-2 w-[80%] lg:w-[96.5%] ">
-              <Input
-                type="text"
-                label="Event location"
-                value={eventlocation}
-                setValue={seteventlocation}
-              />
-              <Input
-                type="number"
-                label="Event capacity"
-                value={eventcapacity}
-                setValue={seteventcapacity}
-              />
+            <div className="ml-2 flex flex-wrap -mx-2 w-[80%] lg:w-[96.5%]">
+              <div className="w-full md:w-1/2 px-2">
+                <Input
+                  type="text"
+                  label="Event location"
+                  value={eventlocation}
+                  setValue={seteventlocation}
+                />
+              </div>
+              <div className="w-full md:w-1/2 px-2">
+                <Input
+                  type="number"
+                  label="Event capacity"
+                  value={eventcapacity}
+                  setValue={seteventcapacity}
+                />
+              </div>
             </div>
             <div className="ml-2">
-              <label className="text-[#7741c3] font-medium font-family-mono text-sm  mb-1">
+              <label className="ml-2 text-[#7741c3] font-medium font-family-mono text-sm  mb-1">
                 Choose event image
               </label>
-              <div className="border border-gray-300 rounded-md  w-[80%] lg:w-[97%] bg-[#f3f3f5]  ">
+              <div className="border ml-2 border-gray-300 rounded-md  w-[76%] lg:w-[95.5%] bg-[#f3f3f5] py-2 text-[#717182] font-mono pl-2">
                 <input
                   type="file"
                   accept="image/*"
@@ -214,7 +222,7 @@ const AddEvent = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-between w-90">
+            <div className="flex justify-between mx-4">
               <button
                 type="button"
                 className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
@@ -232,7 +240,7 @@ const AddEvent = () => {
           </form>
           {dropdown ? (
             <div className="mt-4 border-t border-gray-300 pt-4">
-              <div className="flex justify-between w-full">
+              <div className=" ml-4 flex justify-between w-[77%]">
                 <Input
                   type="text"
                   label="Trackname"
@@ -242,7 +250,7 @@ const AddEvent = () => {
               </div>
               <button
                 type="button"
-                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
+                className="bg-[#7741c3] text-white px-4 py-2 ml-4 my-4 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
                 onClick={handleaddtrack}
               >
                 Add track
@@ -250,8 +258,14 @@ const AddEvent = () => {
             </div>
           ) : null}
         </div>
-        {error && <p className="text-red-500">{error}</p>}
-        {success && <p className="text-green-500">{success}</p>}
+        {error && (
+          <p className="text-red-500 justify-center text-center mt-2">
+            {error}
+          </p>
+        )}
+        {success && (
+          <p className="text-green-500 text-center mt-2">{success}</p>
+        )}
       </Scroll>
     </div>
   );
