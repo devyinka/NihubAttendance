@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Trackchoice from "@/public/src/components/Attendancepagecomponents/Trackchoice";
 import Search from "@/public/src/components/Attendancepagecomponents/Searchinput";
 import Attendanceinfo from "@/public/src/components/Attendancepagecomponents/Attendanceinfo.card";
+import AdminDashboardLayout from "@/public/src/GeneralNavComponent";
 import Scroll from "@/public/src/components/scroll";
 import { Attendancecontex } from "@/public/src/components/Attendancepagecomponents/Attendancecontex";
 import { useContext } from "react";
@@ -67,35 +68,6 @@ const Attendance = () => {
       ? studentinfo.length - present.length
       : present.length - studentinfo.length;
   const Attendancerate = (present.length / studentinfo.length) * 100;
-
-  const handlelogout = () => {
-    Navigation.push("./");
-  };
-
-  //to navigate to Attendance marking page once the button is click
-  const handleAttendancepage = (change) => {
-    Navigation.push("./Attendance");
-    setbutton(change);
-  };
-
-  //to navigate to create page once the button is click
-  const handlecreatepage = (change) => {
-    Navigation.push("./AddEvent");
-    setbutton(change);
-  };
-
-  //to navigate to manageevent page once the button is click
-  const handlemanagepage = (change) => {
-    Navigation.push("./ManageEvent");
-    setbutton(change);
-  };
-
-  // to navigate to subadmin page once the button is click
-  const handlesubadmnpage = (change) => {
-    Navigation.push("./subadmin");
-    setbutton(change);
-  };
-
   const Deleteallstudentintrackandevent = async () => {
     try {
       await deleteStudentsMutation.mutateAsync({
@@ -157,76 +129,11 @@ const Attendance = () => {
   return (
     <div>
       <Header info="Take attendance" />
-      <div className={style.container}>
-        <div className={style.Titleandlogoutcontainer}>
-          <div className={style.title}>Admin Dashboard</div>
-          <div>
-            <button className={style.logoutbox} onClick={handlelogout}>
-              <Image
-                src="/logout.svg"
-                width={14}
-                height={14}
-                alt="logouticon"
-              />
-              <div className={style.logout}> logout </div>
-            </button>
-          </div>
-        </div>
-        <h4 className={style.subtitle}>
-          Manage events, attendance, and sub-admin requests.
-        </h4>
-      </div>
-      {Role == "Admin" ? (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-          <button
-            className={button == "subadmin" ? style.Active : ""}
-            onClick={() => handlesubadmnpage("subadmin")}
-          >
-            Sub-Admins
-          </button>
-        </div>
-      ) : (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-        </div>
-      )}
+      <AdminDashboardLayout
+        role={Role}
+        activeButton={button}
+        setActiveButton={setbutton}
+      />
       <Scroll>
         <div className={style.box}>
           <div className={style.scan}>

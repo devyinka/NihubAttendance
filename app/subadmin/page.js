@@ -1,10 +1,10 @@
 "use client";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./subadmin.module.css";
 import Header from "@/public/src/components/AddEventPageComponents/header";
 import { useContext, useEffect, useState } from "react";
+import AdminDashboardLayout from "@/public/src/GeneralNavComponent";
 import Input from "@/public/src/components/manageEventpagecomponents/forminput";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
 import {
@@ -51,28 +51,6 @@ const SubAdmin = () => {
   };
 
   //to navigate to Attendance marking page once the button is click
-  const handleAttendancepage = (change) => {
-    Navigation.push("./Attendance");
-    setbutton(change);
-  };
-
-  //to navigate to create page once the button is click
-  const handlecreatepage = (change) => {
-    Navigation.push("./AddEvent");
-    setbutton(change);
-  };
-
-  //to navigate to manageevent page once the button is click
-  const handlemanagepage = (change) => {
-    Navigation.push("./ManageEvent");
-    setbutton(change);
-  };
-
-  // to navigate to subadmin page once the button is click
-  const handlesubadmnpage = (change) => {
-    Navigation.push("./subadmin");
-    setbutton(change);
-  };
 
   const handledlete = async (deleteid) => {
     setloading(true);
@@ -148,83 +126,21 @@ const SubAdmin = () => {
   return (
     <div>
       <Header info="Take attendance" />
-      <div className={style.container}>
-        <div className={style.Titleandlogoutcontainer}>
-          <div className={style.title}>Admin Dashboard</div>
-          <div>
-            <button className={style.logoutbox} onClick={handlelogout}>
-              <Image
-                src="/logout.svg"
-                width={14}
-                height={14}
-                alt="logouticon"
-              />
-              <div className={style.logout}> logout </div>
-            </button>
-          </div>
-        </div>
-        <h4 className={style.subtitle}>
-          Manage events, attendance, and sub-admin requests.
-        </h4>
-      </div>
-      {Role == "Admin" ? (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-          <button
-            className={button == "subadmin" ? style.Active : ""}
-            onClick={() => handlesubadmnpage("subadmin")}
-          >
-            Sub-Admins
-          </button>
-        </div>
-      ) : (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-        </div>
-      )}
-      <div className={style.buttondiv}>
-        <button className={style.button} onClick={handlecreatesubadmin}>
+      <AdminDashboardLayout
+        role={Role}
+        activeButton={button}
+        setActiveButton={setbutton}
+      />
+      <div className="pl-[58%] lg:pl-[86%] mt-1 mb-4 px-3">
+        <button
+          className="bg-[#7741C3] rounded-md px-2 py-1 text-sm w-1xl"
+          onClick={handlecreatesubadmin}
+        >
           Create new subadmin
         </button>
       </div>
-      <div className={style.maincontainer}>
-        <div className={style.headercontainer}>
+      <div className="my-1 pt-1 mx-4 rounded-sm bg-white pl-2 border-solid-1 rgba=[0,0,0,0.4] ">
+        <div className="flex justify-between ml-2 mr-5 text-[#7741C3]  solid rgba=[0,0,0,]">
           <span>Admin</span>
           <span>Email</span>
           <span>Delete</span>
@@ -250,7 +166,6 @@ const SubAdmin = () => {
                   "wait..."
                 )}
               </span>{" "}
-              {/**()=>handledlete(info.ID) */}
             </div>
           ))}
         </div>

@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import AdminDashboardLayout from "@/public/src/GeneralNavComponent";
 import style from "./Addevent.module.css";
 import { useState } from "react";
 import Input from "@/public/src/components/AddEventPageComponents/Forminput";
@@ -35,29 +36,29 @@ const AddEvent = () => {
 
   let id = 0;
 
-  const handleAttendancepage = (change) => {
-    Navigation.push("./Attendance");
-    setbutton(change);
-  };
+  // const handleAttendancepage = (change) => {
+  //   Navigation.push("./Attendance");
+  //   setbutton(change);
+  // };
 
-  const handlecreatepage = (change) => {
-    Navigation.push("./AddEvent");
-    setbutton(change);
-  };
+  // const handlecreatepage = (change) => {
+  //   Navigation.push("./AddEvent");
+  //   setbutton(change);
+  // };
 
-  const handlemanagepage = (change) => {
-    Navigation.push("./ManageEvent");
-    setbutton(change);
-  };
+  // const handlemanagepage = (change) => {
+  //   Navigation.push("./ManageEvent");
+  //   setbutton(change);
+  // };
 
-  const handlesubadmnpage = (change) => {
-    Navigation.push("./subadmin");
-    setbutton(change);
-  };
+  // const handlesubadmnpage = (change) => {
+  //   Navigation.push("./subadmin");
+  //   setbutton(change);
+  // };
 
-  const handlelogout = () => {
-    Navigation.push("./");
-  };
+  // const handlelogout = () => {
+  //   Navigation.push("./");
+  // };
 
   //handle form dropdown to add tracks of the evet
   const handledropdown = () => {
@@ -172,76 +173,11 @@ const AddEvent = () => {
   return (
     <div>
       <Header info="Create Event" />
-      <div className={style.container}>
-        <div className={style.Titleandlogoutcontainer}>
-          <div className={style.title}>Admin Dashboard</div>
-          <div>
-            <button onClick={handlelogout} className={style.logoutbox}>
-              <Image
-                src="/logout.svg"
-                width={14}
-                height={14}
-                alt="logouticon"
-              />
-              <div className={style.logout}> logout</div>
-            </button>
-          </div>
-        </div>
-        <h4 className={style.subtitle}>
-          Manage events, attendance, and sub-admin requests.{" "}
-        </h4>
-      </div>
-      {Role == "Admin" ? (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-          <button
-            className={button == "subadmin" ? style.Active : ""}
-            onClick={() => handlesubadmnpage("subadmin")}
-          >
-            Sub-Admins
-          </button>
-        </div>
-      ) : (
-        <div className={style.buttonscontainer}>
-          <button
-            className={button == "create" ? style.Active : ""}
-            onClick={() => handlecreatepage("create")}
-          >
-            {" "}
-            Create events
-          </button>
-          <button
-            className={button == "manage" ? style.Active : ""}
-            onClick={() => handlemanagepage("manage")}
-          >
-            Manage events
-          </button>
-          <button
-            className={button == "Attendance" ? style.Active : ""}
-            onClick={() => handleAttendancepage("Attendance")}
-          >
-            Attendance
-          </button>
-        </div>
-      )}
+      <AdminDashboardLayout
+        role={Role}
+        activeButton={button}
+        setActiveButton={setbutton}
+      />
       <Scroll>
         <div className={style.formcontainer}>
           <h3 className={style.create}>Create New Event</h3>
