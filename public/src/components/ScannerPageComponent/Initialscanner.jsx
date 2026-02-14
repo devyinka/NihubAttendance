@@ -1,6 +1,6 @@
 import Image from "next/image";
 const InitialScannerScreen = ({ onStart }) => (
-  <div className="min-h-screen flex items-center justify-center">
+  <div className="mt-40 flex items-center justify-center ">
     <div>
       <div className="rounded-lg bg-white shadow-lg  w-70 flex flex-col items-center">
         <div className="flex items-center justify-center rounded-full bg-[#7741c3] h-10 w-10 mt-2">

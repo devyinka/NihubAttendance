@@ -1,6 +1,6 @@
 import Image from "next/image";
 export const SuccessCard = ({ studentInfo }) => (
-  <div className="flex flex-col items-center justify-center">
+  <div className="mt-40 flex flex-col items-center justify-center">
     {
       <Image
         src={
