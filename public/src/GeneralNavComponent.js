@@ -40,7 +40,7 @@ export default function AdminDashboardLayout({
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="flex justify-between items-center px-3 py-4 border-b border-gray-200">
+      <div className="flex justify-between items-center  border-b border-gray-200">
         <h1 className="text-[#7741C3] font-bold text-sm">Admin Dashboard</h1>
         <button
           onClick={handleLogout}
@@ -62,7 +62,7 @@ export default function AdminDashboardLayout({
             key={btn}
             className={`rounded-xl px-1 transition text-sm ${
               activeButton === btn
-                ? "bg-white text-[#7741C3] mx-3 "
+                ? "bg-white text-[#7741C3] mx-3  lg:w-40 w-20 "
                 : "hover:bg-purple-700"
             }`}
             onClick={() => navigate(btn)}
