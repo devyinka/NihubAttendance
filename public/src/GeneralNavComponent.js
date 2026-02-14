@@ -19,7 +19,7 @@ export default function AdminDashboardLayout({
   const buttonLabels = {
     create: "Create events",
     manage: "Manage events",
-    Attendance: "Attendance",
+    Attendance: "Attendance info",
     subadmin: "Sub-Admins",
   };
 
@@ -62,7 +62,7 @@ export default function AdminDashboardLayout({
             key={btn}
             className={`rounded-xl px-1 transition text-sm ${
               activeButton === btn
-                ? "bg-white text-[#7741C3] mr-3"
+                ? "bg-white text-[#7741C3] mx-3 "
                 : "hover:bg-purple-700"
             }`}
             onClick={() => navigate(btn)}
