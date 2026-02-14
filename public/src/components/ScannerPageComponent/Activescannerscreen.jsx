@@ -1,7 +1,6 @@
 import { SuccessCard } from "./SucessAndErrorCard";
 import { ErrorCard } from "./SucessAndErrorCard";
 import Image from "next/image";
-import style from "./scannercontainer.module.css";
 const ActiveScannerScreen = ({
   message,
   error,

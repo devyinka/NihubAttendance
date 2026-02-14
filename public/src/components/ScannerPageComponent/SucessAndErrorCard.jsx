@@ -1,5 +1,4 @@
 import Image from "next/image";
-import style from "./scannercontainer.module.css";
 export const SuccessCard = ({ studentInfo }) => (
   <div className="flex flex-col items-center justify-center">
     {
