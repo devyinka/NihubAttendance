@@ -17,10 +17,10 @@ export default function AdminDashboardLayout({
       : ["create", "manage", "Attendance"];
 
   const buttonLabels = {
-    create: "Create events",
-    manage: "Manage events",
-    Attendance: "Attendance info",
-    subadmin: "Sub-Admins",
+    create: "Events",
+    manage: "Manage",
+    Attendance: "info",
+    subadmin: "Admins",
   };
 
   const navigate = (page) => {
