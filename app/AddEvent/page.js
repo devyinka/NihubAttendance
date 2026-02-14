@@ -214,7 +214,7 @@ const AddEvent = () => {
               <label className="ml-2 text-[#7741c3] font-medium font-family-mono text-sm  mb-1">
                 Choose event image
               </label>
-              <div className="border ml-2 border-gray-300 rounded-md  w-[76%] lg:w-[95.5%] bg-[#f3f3f5] py-2 text-[#717182] font-mono pl-2">
+              <div className="border ml-2 border-gray-300 rounded-md  w-[76%] lg:w-[95.5%] bg-[#f3f3f5] py-2 text-[#717182] font-mono pl-2 text-sm">
                 <input
                   type="file"
                   accept="image/*"
