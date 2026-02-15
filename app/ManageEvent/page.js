@@ -308,111 +308,150 @@ const ManageEvent = () => {
         setActiveButton={setbutton}
       />
       <Scroll>
-        <div className={style.box}>
-          <h4 className={style.text}>Manage events</h4>
-          <div className={style.subbox}>
-            <div className={style.headercontainer}>
-              <span className={style.eventtitle}>Title</span>
-              <span className={style.events}>Date</span>
-              <span className={style.events}>Registers</span>
-              <span className={style.events}>status</span>
-              <span className={style.events}>Edit</span>
-              <span className={style.events}>Delete</span>
-            </div>
-            <div>
-              {Events.map((result) => {
-                const tracks = result.eventtracks;
-                return (
-                  <div key={result._id} className={style.list}>
-                    <div className={style.eventrow}>
-                      <h3 className={style.eventname}>{result.eventname}</h3>
-                      <h3 className={style.date}>{result.eventdate}</h3>
-                      <h3 className={style.register}>
-                        {eventCounts[result._id] ?? 0} /{result.eventcapacity}
+        <div className="mt-2 pt-0.8% mx-1 lg:mx-4 md:mx-6 mb-0.5% rounded-lg border border-gray-200 bg-white">
+          <h4 className=" text-[#7741C3] font-bold text-sm lg:text-xl ml-2 mb-1 font-mono mt-2">
+            Manage events
+          </h4>
+          <div className="mt-2 mx-1 lg:mx-4 md:mx-6 mb-0.5% space-y-4">
+            {Events.map((result) => {
+              const tracks = result.eventtracks;
+              return (
+                <div
+                  key={result._id}
+                  className="p-4 md:p-5 bg-white rounded-lg border border-gray-200 shadow-sm"
+                >
+                  {/* Event header with info, status, and actions */}
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-base md:text-lg text-[#7741C3]">
+                        {result.eventname}
                       </h3>
+                      <div className="flex flex-col md:flex-row md:gap-6 text-xs md:text-sm text-gray-600 mt-2">
+                        <p>
+                          <span className="font-medium text-gray-700">
+                            Date:
+                          </span>{" "}
+                          {result.eventdate}
+                        </p>
+                        <p>
+                          <span className="font-medium text-gray-700">
+                            Registered:
+                          </span>{" "}
+                          {eventCounts[result._id] ?? 0}/{result.eventcapacity}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-end ml-4">
                       <button
+                        onClick={() => handlestatuschange(result._id)}
                         className={
                           result.eventstatus
-                            ? style.statusOpen
-                            : style.statusClose
+                            ? "bg-[#7741C3] text-white text-xs px-3 py-1.5 rounded font-medium"
+                            : "bg-red-500 text-white text-xs px-3 py-1.5 rounded font-medium"
                         }
-                        onClick={() => handlestatuschange(result._id)}
                       >
                         {result.eventstatus ? "open" : "closed"}
                       </button>
-
-                      <button className="ml-7 w-[10%] justify-self-center border-radius[10px] mb-1 flex items-center justify-center">
-                        <Image
-                          src="./edit.svg"
-                          alt=""
-                          width={10}
-                          height={10}
+                      <div className="flex gap-2">
+                        <button
                           onClick={() => handleedit(result._id)}
-                        />
-                      </button>
-                      <button className="ml-12 w-[10%] justify-self-center border-radius[10px] mb-1 flex items-center justify-center">
-                        {!deleteevent[result._id] ? (
+                          className="p-2 bg-gray-100 hover:bg-gray-200 rounded transition"
+                          title="Edit event"
+                        >
                           <Image
-                            src="./delete.svg"
-                            alt=""
-                            width={10}
-                            height={10}
-                            onClick={() => confirmdeleteevent(result._id)}
+                            src="./edit.svg"
+                            alt="Edit"
+                            width={16}
+                            height={16}
                           />
-                        ) : (
-                          "wait..."
-                        )}
-                      </button>
+                        </button>
+                        <button
+                          onClick={() => confirmdeleteevent(result._id)}
+                          className="p-2 bg-gray-100 hover:bg-gray-200 rounded transition"
+                          title="Delete event"
+                        >
+                          {!deleteevent[result._id] ? (
+                            <Image
+                              src="./delete.svg"
+                              alt="Delete"
+                              width={16}
+                              height={16}
+                            />
+                          ) : (
+                            <span className="text-xs font-medium">wait...</span>
+                          )}
+                        </button>
+                      </div>
                     </div>
-                    <hr className={style.hr} />
-                    <h1 className={style.track}>Tracks</h1>
-                    <div className={style.namelist}>
-                      {tracks
-                        ? tracks.map((info) => (
-                            <ul key={info._id} className={style.trackslist}>
-                              <li className={style.trackname}>
+                  </div>
+
+                  {/* Tracks section */}
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <h4 className="font-medium text-sm text-[#7741C3] mb-3">
+                      Tracks
+                    </h4>
+                    {tracks && tracks.length > 0 ? (
+                      <div className="space-y-2">
+                        {tracks.map((info) => {
+                          return (
+                            <div
+                              key={info._id}
+                              className="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200 hover:bg-gray-100 transition"
+                            >
+                              <span className="font-medium text-sm text-gray-800 truncate">
                                 {info.trackName}
-                              </li>
-                              <div className={style.action}>
-                                <button>
+                              </span>
+                              <div className="flex gap-2 ml-2">
+                                <button
+                                  onClick={() =>
+                                    handleedittrack(result._id, info._id)
+                                  }
+                                  className="p-1.5 bg-white border border-gray-300 hover:bg-gray-50 rounded transition"
+                                  title="Edit track"
+                                >
                                   <Image
                                     src="./edit.svg"
-                                    alt=""
-                                    width={10}
-                                    height={10}
-                                    onClick={() =>
-                                      handleedittrack(result._id, info._id)
-                                    }
-                                    className={style.deleteaction}
+                                    alt="Edit"
+                                    width={14}
+                                    height={14}
                                   />
                                 </button>
                                 <button
-                                  className={style.deleteaction}
                                   disabled={LoadingTrack[info._id]}
+                                  onClick={() =>
+                                    confirmdeletetrack(result._id, info._id)
+                                  }
+                                  className="p-1.5 bg-white border border-gray-300 hover:bg-gray-50 rounded transition disabled:opacity-50"
+                                  title="Delete track"
                                 >
                                   {!LoadingTrack[info._id] ? (
                                     <Image
                                       src="./delete.svg"
-                                      alt=""
-                                      width={10}
-                                      height={10}
-                                      onClick={() =>
-                                        confirmdeletetrack(result._id, info._id)
-                                      }
+                                      alt="Delete"
+                                      width={14}
+                                      height={14}
                                     />
                                   ) : (
-                                    "wait..."
+                                    <span className="text-xs font-medium">
+                                      ...
+                                    </span>
                                   )}
                                 </button>
                               </div>
-                            </ul>
-                          ))
-                        : null}
-                    </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-500 italic">
+                        No tracks added yet
+                      </p>
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </Scroll>
