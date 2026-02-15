@@ -1,5 +1,3 @@
-import style from "./Forminput.module.css";
-
 const Input = ({ type, label, value, setValue }) => {
   return (
     <div className="flex-1 w-full">
