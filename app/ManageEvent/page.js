@@ -533,7 +533,11 @@ const ManageEvent = () => {
             e.preventDefault(), handlesavetrackedit();
           }}
         >
-          <div className={style.modalbox}>
+          {/* width: 40%; /* height:70%; margin-left: 20%; margin-right: 20%;
+          background-color: white; align-items: flex-start; border-radius: 20px;
+          padding-bottom: 0.1%; margin-bottom: 3%; position: absolute; top: 35%;
+          border: solid rgba(0, 0, 0, 0.1) */}
+          <div className="w-full max-w-md mx-auto  bg-white rounded-lg shadow-lg p-6 absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <button
               className={style.canclemodal}
               onClick={handletrackeditcancle}
@@ -603,7 +607,7 @@ const ManageEvent = () => {
       )}
 
       {error && <p className={style.error}>{error}</p>}
-      {success && <p className={style.sucess}>{success}</p>}
+      {/* {success && <p className={style.sucess}>{success}</p>} */}
     </div>
   );
 };
