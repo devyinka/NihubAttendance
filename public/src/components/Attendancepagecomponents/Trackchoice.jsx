@@ -1,5 +1,3 @@
-import data from "../AddEventPageComponents/backendresponsemock";
-import style from "./trackchoice.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext } from "react";
@@ -31,7 +29,7 @@ const Trackchoice = ({ label, value, setValue }) => {
         const info = Response.data;
         if (!info.data || info.data.length === 0) {
           seterror(
-            Response.Error?.message || "No events available at the moment"
+            Response.Error?.message || "No events available at the moment",
           );
           setTimeout(() => {
             seterror("");
@@ -73,17 +71,19 @@ const Trackchoice = ({ label, value, setValue }) => {
   };
 
   return (
-    <div className={style.container}>
-      <label className={style.title}>{label}</label>
-      <div className={style.inputsubtitle}>
+    <div className="flex flex-col gap-2 w-full">
+      <label className="text-[#7741C3] font-mono text-xs sm:text-[10px] mt-2 mb-1 font-medium">
+        {label}
+      </label>
+      <div className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full">
         <select
-          className={style.selected}
+          className="border-0 outline-none pr-12 sm:pr-6 rounded bg-transparent w-full text-xs text-gray-700"
           value={value}
           onChange={(event) => handleeventclick(event.target.value)}
         >
           <option value="">All events </option>
           {Events.map((option) => (
-            <option className={style.title} key={option._id} value={option._id}>
+            <option key={option._id} value={option._id}>
               {option.eventname}
             </option>
           ))}
@@ -93,13 +93,12 @@ const Trackchoice = ({ label, value, setValue }) => {
           <select
             value={trackvalue}
             onChange={(event) => handletrackselected(event.target.value)}
-            className={style.selected2}
+            className="border-0 outline-none pr-12 sm:pr-6 rounded bg-transparent w-full text-xs text-gray-700 mt-1"
           >
             <option value="">select track </option>
             {tracks.map((option) => (
               <option key={option._id} value={option._id}>
-                {" "}
-                {option.trackName}{" "}
+                {option.trackName}
               </option>
             ))}
           </select>

@@ -130,46 +130,92 @@ const SubAdmin = () => {
         role={Role}
         activeButton={button}
         setActiveButton={setbutton}
-      />
-      <div className="pl-[58%] lg:pl-[86%] mt-1 mb-4 px-3">
-        <button
-          className="bg-[#7741C3] rounded-md px-2 py-1 text-sm w-1xl"
-          onClick={handlecreatesubadmin}
-        >
-          Create new subadmin
-        </button>
-      </div>
-      <div className="my-1 pt-1 mx-4 rounded-sm bg-white pl-2 border-solid-1 rgba=[0,0,0,0.4] ">
-        <div className="flex justify-between ml-2 mr-5 text-[#7741C3]  solid rgba=[0,0,0,]">
-          <span>Admin</span>
-          <span>Email</span>
-          <span>Delete</span>
+      >
+        <div className="mb-4 px-1">
+          <button
+            className="bg-[#7741C3] hover:bg-purple-700 transition-colors rounded-md px-4  text-sm text-white font-medium"
+            onClick={handlecreatesubadmin}
+          >
+            + Create new subadmin
+          </button>
         </div>
-        <hr className={style.hr} />
-        <div>
-          {" "}
-          {subadmin.map((info) => (
-            <div key={info._id} className={style.headercontainer1}>
-              <span>{info.sub_admin_user_name}</span>
-              <span>{info.sub_admin_email}</span>
-              <span>
-                {!deleteadmin[info._id] ? (
-                  <Image
-                    src="./delete.svg"
-                    alt=""
-                    width={10}
-                    height={10}
+        <div className="border border-gray-300 mx-1 mb-4 rounded-lg p-4 bg-gray-50">
+          <h3 className="text-sm font-bold text-[#7741C3] mb-4">
+            Sub-Admin Users
+          </h3>
+          <div className="flex flex-col gap-3 w-full">
+            {subadmin && subadmin.length > 0 ? (
+              subadmin.map((info) => (
+                <div
+                  key={info._id}
+                  className="flex flex-col sm:flex-row gap-4 items-start sm:items-center bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  {/* Avatar Circle */}
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {info.sub_admin_user_name?.charAt(0).toUpperCase() || "A"}
+                  </div>
+
+                  {/* Admin Info - Responsive Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 flex-1 w-full sm:w-auto">
+                    {/* Name */}
+                    <div>
+                      <p className="text-xs text-gray-500 font-medium">
+                        Admin Name
+                      </p>
+                      <p className="text-sm font-semibold text-[#7741C3]">
+                        {info.sub_admin_user_name}
+                      </p>
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <p className="text-xs text-gray-500 font-medium">Email</p>
+                      <p className="text-sm font-semibold text-gray-700 break-all">
+                        {info.sub_admin_email}
+                      </p>
+                    </div>
+
+                    {/* Join Date (if available) */}
+                    <div>
+                      <p className="text-xs text-gray-500 font-medium">
+                        Status
+                      </p>
+                      <p className="text-sm font-semibold text-green-600">
+                        Active
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Delete Button */}
+                  <button
                     onClick={() => handleshowmodal(info._id)}
-                    className={style.delete}
-                  />
-                ) : (
-                  "wait..."
-                )}
-              </span>{" "}
-            </div>
-          ))}
+                    disabled={deleteadmin[info._id]}
+                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+                    title="Delete sub-admin"
+                  >
+                    {!deleteadmin[info._id] ? (
+                      <Image
+                        src="./delete.svg"
+                        alt="delete"
+                        width={18}
+                        height={18}
+                      />
+                    ) : (
+                      <span className="text-xs font-bold">...</span>
+                    )}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-500 text-sm">
+                  No sub-admin users created yet
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </AdminDashboardLayout>
       {edit ? (
         <form onSubmit={handlesavesubadmin}>
           <div className={style.modalcontainer}>

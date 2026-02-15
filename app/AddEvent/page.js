@@ -8,7 +8,6 @@ import { useState } from "react";
 import Input from "@/public/src/components/AddEventPageComponents/Forminput";
 import Header from "@/public/src/components/AddEventPageComponents/header";
 import DescribeInput from "@/public/src/components/AddEventPageComponents/Descriptioninput";
-import Scroll from "@/public/src/components/scroll";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
 import { useContext } from "react";
 
@@ -150,8 +149,7 @@ const AddEvent = () => {
         role={Role}
         activeButton={button}
         setActiveButton={setbutton}
-      />
-      <Scroll>
+      >
         <div className="mt-2 pt-0.8% mx-4 lg:mx-8 md:mx-6 mb-0.5% rounded-lg border border-gray-200 bg-white">
           <h3 className="text-[#7741c3] font-bold text-xl  pl-5 mb-1 font-mono">
             Create New Event
@@ -266,7 +264,7 @@ const AddEvent = () => {
         {success && (
           <p className="text-green-500 text-center mt-2">{success}</p>
         )}
-      </Scroll>
+      </AdminDashboardLayout>
     </div>
   );
 };

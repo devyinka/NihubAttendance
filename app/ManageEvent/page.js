@@ -8,7 +8,6 @@ import AdminDashboardLayout from "@/public/src/GeneralNavComponent";
 import axios from "axios";
 import Input from "@/public/src/components/manageEventpagecomponents/forminput";
 import DescribeInput from "@/public/src/components/manageEventpagecomponents/Descriptioninput";
-import Scroll from "@/public/src/components/scroll";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
 import {
   useEvents,
@@ -306,8 +305,7 @@ const ManageEvent = () => {
         role={Role}
         activeButton={button}
         setActiveButton={setbutton}
-      />
-      <Scroll>
+      >
         <div className="mt-2 pt-0.8% mx-1 lg:mx-4 md:mx-6 mb-0.5% rounded-lg border border-gray-200 bg-white">
           <h4 className=" text-[#7741C3] font-bold text-sm lg:text-xl ml-2 mb-1 font-mono mt-2">
             Manage events
@@ -347,7 +345,7 @@ const ManageEvent = () => {
                         onClick={() => handlestatuschange(result._id)}
                         className={
                           result.eventstatus
-                            ? "bg-[#7741C3] text-white text-xs px-3 py-1.5 rounded font-medium"
+                            ? "bg-[#7741C3] text-white text-xs px-6 py-1.5 rounded font-medium"
                             : "bg-red-500 text-white text-xs px-3 py-1.5 rounded font-medium"
                         }
                       >
@@ -454,7 +452,7 @@ const ManageEvent = () => {
             })}
           </div>
         </div>
-      </Scroll>
+      </AdminDashboardLayout>
 
       {/* edited box for inputs*/}
       {editevent ? (
