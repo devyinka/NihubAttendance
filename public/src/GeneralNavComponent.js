@@ -40,7 +40,7 @@ export default function AdminDashboardLayout({
   return (
     <div className="bg-white">
       {/* Fixed Navigation Section - starts at header height */}
-      <div className="fixed top-[50px] left-0 right-0 z-40 bg-white w-full">
+      <div className="fixed top-[40px] left-0 right-0 z-30 bg-white w-full">
         {/* Header */}
         <div className=" mx-4 my-6 flex justify-between items-center  border-b border-gray-200">
           <h1 className="text-[#7741C3] font-bold text-sm lg:text-2xl">

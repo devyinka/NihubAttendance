@@ -18,9 +18,9 @@ const Attendanceinfo = ({ search }) => {
           {/* Student Photo Circle - Left Side */}
           <div className="flex-shrink-0">
             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#7741C3]  to-purple-600 flex items-center justify-center overflow-hidden border-3 border-purple-600 flex-shrink-0">
-              {info.student_photo ? (
+              {info.student_imageurl ? (
                 <img
-                  src={info.student_photo}
+                  src={info.student_imageurl}
                   alt={info.student_matricnumber}
                   className="w-full h-full object-cover"
                 />
