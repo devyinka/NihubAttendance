@@ -109,19 +109,6 @@ const Scanner = () => {
     <div>
       <Header info="Scanner" />
       <ScannerNav />
-      {/* <div className={style.container}>
-        <div className={style.Titleandlogoutcontainer}>
-          <div className={style.title}>Admin Dashboard</div>
-
-          <button className={style.logoutbox} onClick={handleLogout}>
-            <Image src="/logout.svg" width={14} height={14} alt="logout" />
-            <div className={style.logout}> logout </div>
-          </button>
-        </div>
-        <h4 className={style.subtitle}>
-          Manage events, attendance, and sub-admin requests.
-        </h4>
-      </div> */}
       {!qrActive ? (
         <InitialScannerScreen onStart={handleSimulate} />
       ) : (
