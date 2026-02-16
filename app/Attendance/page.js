@@ -234,25 +234,28 @@ const Attendance = () => {
         </div>
 
         {showmodal && (
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] sm:w-[70%] md:w-[50%] bg-[#7741C3] rounded-lg border border-white p-6 shadow-lg z-50">
-            <h2 className="text-white text-sm font-arial flex flex-wrap justify-center mb-4">
-              {" "}
-              Are you sure you want to delete all the students in this track?
-              This action cannot be undone.{" "}
-            </h2>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <button
-                onClick={confirmdeleteallstudentintrackandevent}
-                className="mt-2 px-6 py-2 bg-white text-[#7741C3] rounded-lg font-arial text-sm hover:bg-gray-100 font-bold"
-              >
-                Yes
-              </button>
-              <button
-                onClick={modalcancle}
-                className="mt-2 px-6 py-2 bg-white text-[#7741C3] rounded-lg font-arial text-sm hover:bg-gray-100 font-bold"
-              >
-                NO
-              </button>
+          <div className="fixed inset-0 bg-[#7741C3]/10 flex items-center justify-center z-50 p-4">
+            <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+              <h2 className="text-base sm:text-lg font-bold text-red-600 mb-2">
+                Are you sure you want to delete all the students in this track?
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600 mb-6">
+                This action cannot be undone.
+              </p>
+              <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+                <button
+                  onClick={modalcancle}
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmdeleteallstudentintrackandevent}
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition text-sm sm:text-base"
+                >
+                  Yes, Delete
+                </button>
+              </div>
             </div>
           </div>
         )}

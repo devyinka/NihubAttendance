@@ -217,7 +217,7 @@ const SubAdmin = () => {
         </div>
       </AdminDashboardLayout>
       {edit && (
-        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-[#7741C3]/10 flex items-center justify-center z-50 p-4">
           <form
             onSubmit={handlesavesubadmin}
             className="w-full max-w-sm sm:max-w-md bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:p-8 relative"
@@ -284,7 +284,7 @@ const SubAdmin = () => {
         </div>
       )}
       {showmodal && (
-        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-[#7741C3]/10 flex items-center justify-center z-50 p-4">
           <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
             <h2 className="text-base sm:text-lg font-bold text-red-600 mb-6">
               Are you sure you want to delete this Admin?
