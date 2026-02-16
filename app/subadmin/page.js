@@ -125,7 +125,7 @@ const SubAdmin = () => {
 
   return (
     <div>
-      <Header info="Take attendance" />
+      <Header info="Admins" />
       <AdminDashboardLayout
         role={Role}
         activeButton={button}
