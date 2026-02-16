@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function AdminDashboardLayout({
   role,
@@ -9,6 +10,7 @@ export default function AdminDashboardLayout({
   children,
 }) {
   const router = useRouter();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // Navigation buttons
   const buttons =
@@ -35,7 +37,18 @@ export default function AdminDashboardLayout({
     router.push(`./${routes[page]}`);
   };
 
-  const handleLogout = () => router.push("./");
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutModal(false);
+    router.push("./");
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
+  };
 
   return (
     <div className="bg-white">
@@ -47,7 +60,7 @@ export default function AdminDashboardLayout({
             Admin Dashboard
           </h1>
           <button
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="flex items-center gap-2 text-[#7741C3] text-sm hover:text-purple-700 lg:text-xl"
           >
             <Image src="/logout.svg" width={14} height={14} alt="logout" />
@@ -79,6 +92,31 @@ export default function AdminDashboardLayout({
 
       {/* Page content with margin to account for fixed header */}
       <div className="pt-[280px] px-4 py-2">{children}</div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+            <h2 className="text-base sm:text-lg font-bold text-red-600 mb-6">
+              Are you sure you want to logout?
+            </h2>
+            <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+              <button
+                onClick={cancelLogout}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmLogout}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition text-sm sm:text-base"
+              >
+                Yes, Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
