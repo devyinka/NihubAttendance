@@ -188,6 +188,7 @@ const ManageEvent = () => {
 
   // to display modal for confirmation of delete action for event delete
   const confirmdeleteevent = (deleteid) => {
+    if (editevent || edittrack) return; // Prevent delete modal if edit is active
     setshowmodal(true);
     setdeleteeventid(deleteid);
   };
@@ -221,6 +222,7 @@ const ManageEvent = () => {
 
   // it will display modal that will prompt you select yes or no for you track deleting
   const confirmdeletetrack = (eventid, trackid) => {
+    if (editevent || edittrack) return; // Prevent delete modal if edit is active
     setdeletemodal(true);
     setSelectedDeleteEvent(eventid);
     setdeletetrackid(trackid);
@@ -267,6 +269,25 @@ const ManageEvent = () => {
   const handletrackeditcancle = () => {
     setedittrack(false);
   };
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (edittrack || editevent || showmodal || deletemodal) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+    } else {
+      document.documentElement.style.overflow = "unset";
+      document.body.style.overflow = "unset";
+      document.body.style.height = "unset";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "unset";
+      document.body.style.overflow = "unset";
+      document.body.style.height = "unset";
+    };
+  }, [edittrack, editevent, showmodal, deletemodal]);
 
   //  track edited saved functionality
   const handlesavetrackedit = async () => {
@@ -366,7 +387,8 @@ const ManageEvent = () => {
                         </button>
                         <button
                           onClick={() => confirmdeleteevent(result._id)}
-                          className="p-2 bg-gray-100 hover:bg-gray-200 rounded transition"
+                          disabled={editevent || edittrack}
+                          className="p-2 bg-gray-100 hover:bg-gray-200 rounded transition disabled:opacity-50 disabled:cursor-not-allowed"
                           title="Delete event"
                         >
                           {!deleteevent[result._id] ? (
@@ -416,11 +438,15 @@ const ManageEvent = () => {
                                   />
                                 </button>
                                 <button
-                                  disabled={LoadingTrack[info._id]}
+                                  disabled={
+                                    LoadingTrack[info._id] ||
+                                    editevent ||
+                                    edittrack
+                                  }
                                   onClick={() =>
                                     confirmdeletetrack(result._id, info._id)
                                   }
-                                  className="p-1.5 bg-white border border-gray-300 hover:bg-gray-50 rounded transition disabled:opacity-50"
+                                  className="p-1.5 bg-white border border-gray-300 hover:bg-gray-50 rounded transition disabled:opacity-50 disabled:cursor-not-allowed"
                                   title="Delete track"
                                 >
                                   {!LoadingTrack[info._id] ? (
@@ -456,19 +482,29 @@ const ManageEvent = () => {
 
       {/* edited box for inputs*/}
       {editevent ? (
-        <div>
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <form
             onSubmit={(e) => {
               e.preventDefault(), handlesaveedit();
             }}
+            className="w-full max-w-sm sm:max-w-md bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:p-8 relative max-h-[90vh] overflow-y-auto"
           >
-            <div className={style.modalbox}>
-              <button
-                className={style.canclemodal}
-                onClick={handleediteventcancle}
-              >
-                x
-              </button>
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={handleediteventcancle}
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition"
+            >
+              ✕
+            </button>
+
+            {/* Title */}
+            <h2 className="text-lg sm:text-xl font-bold text-[#7741C3] mb-4 sm:mb-6 pr-6">
+              Edit Event
+            </h2>
+
+            {/* Form Inputs */}
+            <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6">
               <Input
                 type="text"
                 label="Event title"
@@ -499,110 +535,143 @@ const ManageEvent = () => {
                 value={eventdescribe}
                 setValue={seteventdescribe}
               />
-              <div className={style.inputcontainer2}>
-                <label className={style.eventimagetitle}>
-                  chose event image
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Choose event image
                 </label>
-                <div className={style.eventimagesubtitle}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(event) => setphoto(event.target.files[0])}
-                  />
-                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => setphoto(event.target.files[0])}
+                  className="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                />
               </div>
-              <div className={style.submit}>
-                <button
-                  className={style.canclebutton}
-                  onClick={handleediteventcancle}
-                >
-                  cancle
-                </button>
-                <button className={style.savebutton} type="submit">
-                  {!loading ? "save Changes" : "wait..."}
-                </button>
-              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 justify-end">
+              <button
+                type="button"
+                onClick={handleediteventcancle}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-[#7741C3] text-white font-medium rounded-lg hover:bg-[#5a2fa0] transition disabled:opacity-50 text-sm sm:text-base"
+                disabled={loading}
+              >
+                {!loading ? "Save Changes" : "Saving..."}
+              </button>
             </div>
           </form>
         </div>
       ) : null}
 
       {edittrack && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault(), handlesavetrackedit();
-          }}
-        >
-          {/* width: 40%; /* height:70%; margin-left: 20%; margin-right: 20%;
-          background-color: white; align-items: flex-start; border-radius: 20px;
-          padding-bottom: 0.1%; margin-bottom: 3%; position: absolute; top: 35%;
-          border: solid rgba(0, 0, 0, 0.1) */}
-          <div className="w-full max-w-md mx-auto  bg-white rounded-lg shadow-lg p-6 absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault(), handlesavetrackedit();
+            }}
+            className="w-full max-w-sm sm:max-w-md bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:p-8 relative"
+          >
+            {/* Close Button */}
             <button
-              className={style.canclemodal}
+              type="button"
               onClick={handletrackeditcancle}
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition"
             >
-              x
+              ✕
             </button>
-            <Input
-              type="text"
-              label="Track full name"
-              value={edittrackname}
-              setValue={setedittrackname}
-            />
-            <Input
-              type="text"
-              label="Track Abrrevation"
-              value={edittrackabrevation}
-              setValue={setedittrackabrevation}
-            />
-            <div className={style.submit}>
+
+            {/* Title */}
+            <h2 className="text-lg sm:text-xl font-bold text-[#7741C3] mb-4 sm:mb-6 pr-6">
+              Edit Track
+            </h2>
+
+            {/* Form Inputs */}
+            <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6">
+              <Input
+                type="text"
+                label="Track full name"
+                value={edittrackname}
+                setValue={setedittrackname}
+              />
+              <Input
+                type="text"
+                label="Track Abbreviation"
+                value={edittrackabrevation}
+                setValue={setedittrackabrevation}
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 justify-end">
               <button
-                className={style.canclebutton}
+                type="button"
                 onClick={handletrackeditcancle}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
               >
-                cancle
+                Cancel
               </button>
-              <button className={style.savebutton} type="submit">
-                {!loading ? "save Changes" : "wait..."}
+              <button
+                type="submit"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-[#7741C3] text-white font-medium rounded-lg hover:bg-[#5a2fa0] transition disabled:opacity-50 text-sm sm:text-base"
+                disabled={loading}
+              >
+                {!loading ? "Save Changes" : "Saving..."}
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
 
       {showmodal && (
-        <div className={style.confirmdelete}>
-          <h2 className={style.warning}>
-            {" "}
-            Are you sure you want to delete this event
-          </h2>
-          <button onClick={confirmdelete} className={style.deletebutton}>
-            Yes
-          </button>
-          <button
-            onClick={handlecancledeleteevent}
-            className={style.deletebutton}
-          >
-            NO
-          </button>
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+            <h2 className="text-base sm:text-lg font-bold text-red-600 mb-6">
+              Are you sure you want to delete this event?
+            </h2>
+            <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+              <button
+                onClick={handlecancledeleteevent}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmdelete}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition text-sm sm:text-base"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
       {deletemodal && (
-        <div className={style.confirmdelete}>
-          <h2 className={style.warning}>
-            {" "}
-            Are you sure you want to delete this track
-          </h2>
-          <button onClick={savedeletetrack} className={style.deletebutton}>
-            Yes
-          </button>
-          <button
-            onClick={handlecancletrackdelete}
-            className={style.deletebutton}
-          >
-            NO
-          </button>
+        <div className="fixed inset-0 bg-purple bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+            <h2 className="text-base sm:text-lg font-bold text-red-600 mb-6">
+              Are you sure you want to delete this track?
+            </h2>
+            <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+              <button
+                onClick={handlecancletrackdelete}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={savedeletetrack}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition text-sm sm:text-base"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

@@ -170,7 +170,7 @@ const SubAdmin = () => {
                     {/* Email */}
                     <div>
                       <p className="text-xs text-gray-500 font-medium">Email</p>
-                      <p className="text-sm font-semibold text-gray-700 break-all">
+                      <p className="text-sm font-semibold text-[#7741C3] break-all">
                         {info.sub_admin_email}
                       </p>
                     </div>
