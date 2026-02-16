@@ -20,7 +20,7 @@ const ActiveScannerScreen = ({
         <h2 className="text-gray-700 text-center font-normal text-sm mt-2 font-family: Arial mb-2">
           Position the QR code within the frame to mark attendance
         </h2>
-        <div className="max-w-50 max-h-40 bg-gray-200  rounded-lg   items-center justify-center mb-4">
+        <div className="w-50 max-60 bg-gray-200  rounded-lg   items-center justify-center mb-4">
           <div style={{ position: "relative", width: "100%" }}>
             {!message && !error ? (
               <div id="qr-reader" style={{ width: "100%" }} />
