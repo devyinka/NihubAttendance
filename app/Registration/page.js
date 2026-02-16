@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import axios from "axios";
 import Header from "@/public/src/components/RegistrationPageComponents/header";
-import style from "./Registration.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Input from "@/public/src/components/RegistrationPageComponents/forminput";
@@ -124,7 +123,7 @@ const Registration = () => {
       }
     } catch (Error) {
       seterror(
-        Error.response?.data?.Error || Error.message || "Registration failed"
+        Error.response?.data?.Error || Error.message || "Registration failed",
       );
       setsuccess("");
       setloading(false);
@@ -143,7 +142,7 @@ const Registration = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(119,65,195,0.14),_rgba(255,255,255,0.9)_55%)]">
       {navigating && (
         <div
           style={{
@@ -164,7 +163,7 @@ const Registration = () => {
           Loading...
         </div>
       )}
-      <div className={style.Header}>
+      <div>
         <Header />
       </div>
       {/* <button
@@ -174,11 +173,15 @@ const Registration = () => {
       >
         {navigating ? "Loading..." : "Back to Events"}
       </button> */}
-      <div className="mx-1 mb-20 bg-white rounded-lg border border-[rgba(159,118,216,0.8)] w-80 lg:w-203 md:w-125 justify-self-center p-6 mt-10">
-        <h3 className={style.title}>Event Registration</h3>
-        <h3 className={style.subtitle}>
-          Please fill in your details to register for this event{" "}
-        </h3>
+      <div className="mx-auto mb-20 mt-10 w-full max-w-2xl rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur sm:p-8">
+        <div className="mb-6 text-center">
+          <h3 className="text-lg font-bold text-[#7741c3]">
+            Event Registration
+          </h3>
+          <p className="text-xs text-gray-500">
+            Please fill in your details to register for this event.
+          </p>
+        </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -209,20 +212,18 @@ const Registration = () => {
             value={student_department}
             setValue={setstudent_department}
           />
-          <label className={style.title}>Gender</label>
-          <div className={style.subtitle}>
+          <label className="ml-2 mt-2 mb-1 block text-[#7741c3] font-mono text-[90%] font-normal">
+            Gender
+          </label>
+          <div className="mx-2 mb-2 rounded-md border border-transparent bg-[#f3f3f5] px-2 py-2 text-[70%] text-[#717182] font-mono">
             <select
-              style={{ border: "none", outline: "none" }}
+              className="w-full bg-transparent outline-none"
               value={student_gender}
               onChange={(event) => setstudent_gender(event.target.value)}
             >
               <option value="">Select Gender</option>
-              <option className={style.title} value="male">
-                Male
-              </option>
-              <option className={style.title} value="female">
-                Female
-              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </div>
 
@@ -231,20 +232,34 @@ const Registration = () => {
             value={trackid}
             setValue={settrackid}
           />
-          <label className={style.title}>Upload your Passport Photograph</label>
-          <div className={style.subtitle}>
+          <label className="ml-2 mt-2 mb-1 block text-[#7741c3] font-mono text-[90%] font-normal">
+            Upload your Passport Photograph
+          </label>
+          <div className="mx-2 mb-2 rounded-md border border-transparent bg-[#f3f3f5] px-2 py-2 text-[70%] text-[#717182] font-mono">
             <input
               required
               type="file"
               accept="image/*"
               onChange={(event) => setstudent_photo(event.target.files[0])}
+              className="w-full text-xs text-gray-600 file:mr-3 file:rounded file:border-0 file:bg-white file:px-3 file:py-1 file:text-xs file:font-medium file:text-[#7741c3]"
             />
           </div>
-          <button className={style.submitbutton} type="submit">
+          <button
+            className="mt-3 w-full rounded-md bg-[#7741c3] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#6a39b0]"
+            type="submit"
+          >
             {!loading ? "Register" : "please wait..."}
           </button>
-          {Error && <p className={style.error}>{Error}</p>}
-          {success && <p className={style.success}>{success}</p>}
+          {Error && (
+            <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-center text-xs text-red-600">
+              {Error}
+            </p>
+          )}
+          {success && (
+            <p className="mt-3 rounded-md bg-green-50 px-3 py-2 text-center text-xs text-green-600">
+              {success}
+            </p>
+          )}
         </form>
       </div>
     </div>

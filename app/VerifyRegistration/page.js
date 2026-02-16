@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
-import style from "@/app/AdminLogin/page.module.css";
 import Input from "@/public/src/components/AdminLoginpageComponents/Forminput";
 import { useState } from "react";
 import axios from "axios";
@@ -98,17 +97,19 @@ const AdminRegisterpage = () => {
   };
 
   return (
-    <div>
-      <Header info={"Register Admin"} />
-      {/* <div>
-        <button className={style.backbotton} onClick={handlegoback}>
-          Back to Login
-        </button>
-      </div> */}
-      <div className=" flex items-center justify-center fixed inset-0">
-        <div className="border border-[#7741c3]  w-80 md:w-120 h-130 flex items-center justify-center flex-col rounded-lg p-4 bg-white shadow-lg">
-          <h2 className="mt-3 text-[#7741c3]">Register New Admin</h2>
-          <form>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(119,65,195,0.14),_rgba(255,255,255,0.9)_55%)]">
+      <Header info={"Verify Registration"} />
+      <div className="mx-auto flex min-h-[calc(100vh-50px)] items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur">
+          <div className="mb-5 text-center">
+            <h2 className="text-lg font-bold text-[#7741c3]">
+              Complete your registration
+            </h2>
+            <p className="text-xs text-gray-500">
+              Enter your details and verification code to proceed.
+            </p>
+          </div>
+          <form className="space-y-1" onSubmit={handlesubmit}>
             <Input
               type="text"
               label="User name"
@@ -123,38 +124,40 @@ const AdminRegisterpage = () => {
             />
             <Input
               type="text"
-              label="Verification-Code"
+              label="Verification code"
               value={verificationCode}
               setValue={setverificationCode}
             />
             <Input
               type="password"
-              label="password"
+              label="Password"
               value={password}
               setValue={setPassword}
             />
             <Input
               type="password"
-              label="confirm-password"
+              label="Confirm password"
               value={re_enterpassword}
               setValue={set_re_enterpassword}
             />
-            <h2 className={style.subtitle}>
-              Ensure the password is up to 6 or 8 characters
-            </h2>
+            <p className="mt-1 text-center text-[10px] text-gray-500">
+              Password should be at least 6 characters.
+            </p>
             <button
               type="submit"
-              className={style.submit}
-              onClick={handlesubmit}
+              className="mt-3 w-full rounded-md bg-[#7741c3] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#6a39b0]"
             >
-              {" "}
-              {!loading ? "Register new Admin" : "please wait..."}
+              {!loading ? "Continue" : "please wait..."}
             </button>
             {error && (
-              <p style={{ color: "red", justifySelf: "center" }}>{error}</p>
+              <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-center text-xs text-red-600">
+                {error}
+              </p>
             )}
             {Success && (
-              <p style={{ color: "green", justifySelf: "center" }}>{Success}</p>
+              <p className="mt-3 rounded-md bg-green-50 px-3 py-2 text-center text-xs text-green-600">
+                {Success}
+              </p>
             )}
           </form>
         </div>

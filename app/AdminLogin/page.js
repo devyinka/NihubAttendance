@@ -5,7 +5,6 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
-import style from "./page.module.css";
 import Input from "@/public/src/components/AdminLoginpageComponents/Forminput";
 import { Rolecontex } from "@/public/src/components/AdminLoginpageComponents/Admincontex";
 import Cookies from "js-cookie";
@@ -15,10 +14,10 @@ const Login = () => {
   const { Role, setRole } = useContext(Rolecontex);
   const Navigation = useRouter();
 
-  const handlegoback = () => {
-    Cookies.remove("token", { path: "/" });
-    Navigation.push("./");
-  };
+  // const handlegoback = () => {
+  //   Cookies.remove("token", { path: "/" });
+  //   Navigation.push("./");
+  // };
   const [Email, setEmail] = useState("nihubeventapp@gmail.com");
   const [subAdminEmail, setsubAdminEmail] = useState("Sub-Admin@gmail.com");
   const [Password, setPassword] = useState("");
@@ -105,57 +104,45 @@ const Login = () => {
     }
   };
 
-  const handleForgotPassword = () => {
-    // Navigation handled by Link component
-  };
-
-  const handleRegister = () => {
-    // Navigation handled by Link component
-  };
-
   return (
-    <div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(119,65,195,0.14),_rgba(255,255,255,0.9)_55%)]">
       <Header info={"Admin login"} />
-      {/* <div>
-        <button className={style.backbotton} onClick={handlegoback}>
-          Back to Events{" "}
-        </button>
-      </div> */}
-      <div className=" flex items-center justify-center fixed inset-0 ">
-        <div className="border border-[#7741c3] w-80 h-90 flex items-center justify-center flex-col rounded-lg p-4 bg-white shadow-lg">
-          <h2 className="text-[#7741c3] font-mono text-xs place-self-center pt-0 mb-1 font-bold">
-            Login
-          </h2>
-          <h6 className="text-gray-500 text-xs mb-1">
-            Sign in to access the admin dashboard
-          </h6>
+      <div className="mx-auto flex min-h-[calc(100vh-50px)] items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur">
+          <div className="mb-5 text-center">
+            <h2 className="text-lg font-bold text-[#7741c3]">Welcome back</h2>
+            <p className="text-xs text-gray-500">
+              Sign in to access the admin dashboard
+            </p>
+          </div>
 
-          <div className="flex justify-around text-gray-500 font-mono text-[70%] w-[90%] bg-[#f3f3f5] rounded-md p-1 mb-2">
+          <div className="mb-5 flex items-center rounded-full bg-[#f3f3f5] p-1 text-[70%] font-mono text-gray-500">
             <button
-              className={
+              className={`flex-1 rounded-full px-3 py-1 transition ${
                 Role == "Admin"
-                  ? "bg-white rounded-[20px] w-[50%] text-[#7741c3] mt-0"
-                  : ""
-              }
+                  ? "bg-white text-[#7741c3] shadow"
+                  : "hover:text-[#7741c3]"
+              }`}
               onClick={() => handleRoleChange("Admin")}
             >
               Admin
             </button>
             <button
-              className={
+              className={`flex-1 rounded-full px-3 py-1 transition ${
                 Role == "SubAdmin"
-                  ? "bg-white rounded-[20px] w-[50%] text-[#7741c3] mt-0"
-                  : ""
-              }
+                  ? "bg-white text-[#7741c3] shadow"
+                  : "hover:text-[#7741c3]"
+              }`}
               onClick={() => handleRoleChange("SubAdmin")}
             >
               SubAdmin
             </button>
           </div>
+
           {Role == "Admin" ? (
             <div>
               <form
-                className="w-75"
+                className="space-y-1"
                 onSubmit={(e) => {
                   e.preventDefault(), handlesubmit();
                 }}
@@ -172,31 +159,35 @@ const Login = () => {
                   value={Password}
                   setValue={setPassword}
                 />
-                <Link
-                  href="/ForgotPassword"
-                  prefetch={true}
-                  className="bg-none text-[#7741c3] font-mono text-xs mt-2  ml-5 underline cursor-pointer flex place-self-end pr-3"
-                >
-                  Forgot Password?
-                </Link>
+                <div className="flex justify-end pr-1">
+                  <Link
+                    href="/ForgotPassword"
+                    prefetch={true}
+                    className="text-xs font-mono text-[#7741c3] underline"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
                 <button
                   type="submit"
-                  className=" text-white bg-[#7741c3] font-mono text-xs font-normal mt-2 mb-1 rounded-md w-[90%] p-2 ml-5"
+                  className="mt-3 w-full rounded-md bg-[#7741c3] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#6a39b0]"
                 >
-                  {!loading ? "login As Admin" : "please wait..."}
+                  {!loading ? "Login as Admin" : "please wait..."}
                 </button>
               </form>
-              <Link
-                href="/SuperAdminRegister"
-                prefetch={true}
-                className={style.Register}
-              >
-                Register superadmin{" "}
-              </Link>
+              <div className="mt-4 text-center">
+                <Link
+                  href="/SuperAdminRegister"
+                  prefetch={true}
+                  className="text-xs font-mono text-[#7741c3] underline"
+                >
+                  Register superadmin
+                </Link>
+              </div>
             </div>
           ) : (
             <form
-              className="w-75"
+              className="space-y-1"
               onSubmit={(e) => {
                 e.preventDefault(), handlesubmit();
               }}
@@ -219,29 +210,30 @@ const Login = () => {
                 value={Password}
                 setValue={setPassword}
               />
-              <Link
-                href="/ForgotPassword"
-                prefetch={true}
-                className="bg-none text-[#7741c3] font-mono text-xs mt-2  ml-5 underline cursor-pointer flex place-self-end pr-3"
-              >
-                Forgot Password?
-              </Link>
+              <div className="flex justify-end pr-1">
+                <Link
+                  href="/ForgotPassword"
+                  prefetch={true}
+                  className="text-xs font-mono text-[#7741c3] underline"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
               <button
                 type="submit"
-                className=" text-white bg-[#7741c3] font-mono text-xs font-normal mt-2 mb-1 rounded-md w-[90%] p-2 ml-5 "
+                className="mt-3 w-full rounded-md bg-[#7741c3] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#6a39b0]"
               >
-                {" "}
-                {!loading ? "login As Sub-Admin" : "please wait..."}{" "}
+                {!loading ? "Login as Sub-Admin" : "please wait..."}
               </button>
             </form>
           )}
           {Error && (
-            <p className="text-red-600 text-xs text-center place-self-center">
+            <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-center text-xs text-red-600">
               {Error}
             </p>
           )}
           {Success && (
-            <p className="text-green-600 text-xs text-center place-self-center">
+            <p className="mt-3 rounded-md bg-green-50 px-3 py-2 text-center text-xs text-green-600">
               {Success}
             </p>
           )}
