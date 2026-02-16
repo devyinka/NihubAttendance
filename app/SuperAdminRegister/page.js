@@ -59,7 +59,7 @@ const SuperAdminRegister = () => {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(119,65,195,0.14),_rgba(255,255,255,0.9)_55%)]">
-      <Header info={"Super Admin Register"} />
+      <Header info={"Super Admin"} />
       <div className="mx-auto flex min-h-[calc(100vh-50px)] items-center justify-center px-4 py-10">
         <div className="w-full max-w-md rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur">
           <div className="mb-5 text-center">

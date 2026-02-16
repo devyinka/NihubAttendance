@@ -166,13 +166,6 @@ const Registration = () => {
       <div>
         <Header />
       </div>
-      {/* <button
-        className="text-white font-mono bg-[#7741C3] text-xs ml-13 md:ml-53 mr-40 w-30 py-0.5 px-1 text-center my-2 lg:ml-68"
-        onClick={handlegoback}
-        disabled={navigating}
-      >
-        {navigating ? "Loading..." : "Back to Events"}
-      </button> */}
       <div className="mx-auto mb-20 mt-10 w-full max-w-2xl rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur sm:p-8">
         <div className="mb-6 text-center">
           <h3 className="text-lg font-bold text-[#7741c3]">

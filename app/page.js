@@ -67,7 +67,7 @@ export default function Home() {
                 with your fellow tech enthusiasts
               </h1>
             </div>
-            <div className=" ml-10 mt-1 lg:ml-60 md:ml-25 lg:mt-4">
+            <div className=" ml-10 mt-1 lg:ml-60 md:ml-25 lg:mt-4 mb-3">
               <button
                 className="text-xs bg-[#7741c3]  w-[35%] lg:w-[20%]  py-[0.8%] px-0.5 rounded-lg "
                 onClick={handlescrolltobottom}
@@ -78,8 +78,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="text-[#7741c3] text-center font-mono text-xs font-normal justify-center  absolute bg-white place-self-center w-[80%] flex flex-wrap flex-col">
-        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-3">
+      <div className="text-[#7741c3] text-center font-mono text-xs font-normal justify-center  absolute bg-white place-self-center w-[80%] flex flex-wrap flex-col lg:mt-1  ">
+        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-3 mt-1">
           Available Events
         </h1>
         <h3 className="text-[70%] md:text-[100%] lg:text-[120%] mb-10">
