@@ -216,34 +216,40 @@ const SubAdmin = () => {
           </div>
         </div>
       </AdminDashboardLayout>
-      {edit ? (
-        <form onSubmit={handlesavesubadmin}>
-          <div className={style.modalcontainer}>
+      {edit && (
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <form
+            onSubmit={handlesavesubadmin}
+            className="w-full max-w-sm sm:max-w-md bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:p-8 relative"
+          >
+            {/* Close Button */}
             <button
               type="button"
-              className={style.canclemodal}
               onClick={handleCancleSubAdminCreate}
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition"
             >
-              x
+              ✕
             </button>
-            <h2 className={style.newadmin}> imag(Create New Sub-Admin)</h2>
-            <div>
+
+            {/* Title */}
+            <h2 className="text-lg sm:text-xl font-bold text-[#7741C3] mb-4 sm:mb-6 pr-6">
+              Create New Sub-Admin
+            </h2>
+
+            {/* Form Inputs */}
+            <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6">
               <Input
                 type="text"
                 label="Sub-Admin Full Name"
                 value={subadminfullname}
                 setValue={setsubadminfullname}
               />
-            </div>
-            <div>
               <Input
                 type="email"
                 label="Sub-Admin Email"
                 value={subadminemail}
                 setValue={setsubadminemail}
               />
-            </div>
-            <div>
               <Input
                 type="password"
                 label="Sub-Admin Password"
@@ -251,38 +257,53 @@ const SubAdmin = () => {
                 setValue={setsubadminpassword}
               />
             </div>
-            <h2 className={style.password}>
-              make the Password to be atleast 8 characters
-            </h2>
-            <div>
-              <button className={style.button1} type="submit">
-                create sub-admin
-              </button>
+
+            {/* Password Note */}
+            <p className="text-xs sm:text-sm text-gray-600 mb-5 sm:mb-6">
+              Password must be at least 8 characters
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 justify-end">
               <button
                 type="button"
-                className={style.button2}
                 onClick={handleCancleSubAdminCreate}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
               >
-                cancle
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-[#7741C3] text-white font-medium rounded-lg hover:bg-[#5a2fa0] transition disabled:opacity-50 text-sm sm:text-base"
+                disabled={loading}
+              >
+                {!loading ? "Create Sub-Admin" : "Creating..."}
               </button>
             </div>
-          </div>{" "}
-        </form>
-      ) : (
-        ""
+          </form>
+        </div>
       )}
       {showmodal && (
-        <div className={style.confirmdelete}>
-          <h2 className={style.warning}>
-            {" "}
-            Are you sure you want to delete this Admin
-          </h2>
-          <button onClick={confirmdeleteaction} className={style.deletebutton}>
-            Yes
-          </button>
-          <button onClick={modalcancle} className={style.deletebutton}>
-            NO
-          </button>
+        <div className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+            <h2 className="text-base sm:text-lg font-bold text-red-600 mb-6">
+              Are you sure you want to delete this Admin?
+            </h2>
+            <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+              <button
+                onClick={modalcancle}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmdeleteaction}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition text-sm sm:text-base"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
