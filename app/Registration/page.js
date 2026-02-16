@@ -212,10 +212,10 @@ const Registration = () => {
             value={student_department}
             setValue={setstudent_department}
           />
-          <label className="ml-2 mt-2 mb-1 block text-[#7741c3] font-mono text-[90%] font-normal">
-            Gender
+          <label className="mt-2 mb-1 block pl-[4%] text-[#7741C3] text-[90%]">
+            Sex
           </label>
-          <div className="mx-2 mb-2 rounded-md border border-transparent bg-[#f3f3f5] px-2 py-2 text-[70%] text-[#717182] font-mono">
+          <div className="mx-[4%] mb-2 rounded-[4px] border border-transparent bg-[#F3F3F5] px-[2%] py-2 text-[70%] text-[#717182]">
             <select
               className="w-full bg-transparent outline-none"
               value={student_gender}
@@ -232,16 +232,16 @@ const Registration = () => {
             value={trackid}
             setValue={settrackid}
           />
-          <label className="ml-2 mt-2 mb-1 block text-[#7741c3] font-mono text-[90%] font-normal">
-            Upload your Passport Photograph
+          <label className="mt-2 mb-1 block pl-[4%] text-[#7741C3] text-[90%]">
+            Photo
           </label>
-          <div className="mx-2 mb-2 rounded-md border border-transparent bg-[#f3f3f5] px-2 py-2 text-[70%] text-[#717182] font-mono">
+          <div className="mx-[4%] mb-2 rounded-[4px] border border-transparent bg-[#F3F3F5] px-[2%] py-2 text-[70%] text-[#717182]">
             <input
               required
               type="file"
               accept="image/*"
               onChange={(event) => setstudent_photo(event.target.files[0])}
-              className="w-full text-xs text-gray-600 file:mr-3 file:rounded file:border-0 file:bg-white file:px-3 file:py-1 file:text-xs file:font-medium file:text-[#7741c3]"
+              className="w-full text-xs text-gray-600 file:mr-3 file:rounded file:border-0 file:bg-white file:px-3 file:py-1 file:text-xs file:font-medium file:text-[#7741C3]"
             />
           </div>
           <button

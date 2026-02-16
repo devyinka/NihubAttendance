@@ -82,11 +82,11 @@ export default function Home() {
         <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-3">
           Available Events
         </h1>
-        <h3 className="text-[70%] md:text-[100%] lg:text-[120%]">
+        <h3 className="text-[70%] md:text-[100%] lg:text-[120%] mb-10">
           Browse and register for an upcoming events{" "}
         </h3>
       </div>
-      <div className="flex flex-wrap justify-center gap-3 mt-5 mb-5">
+      <div className="flex flex-wrap justify-center gap-3 mt-10 mb-5">
         <EventRegistration data={events} />
       </div>
       {error && <p className={style.error}>{error}</p>}
