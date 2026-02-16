@@ -90,7 +90,6 @@ export default function Home() {
         <EventRegistration data={events} />
       </div>
       {error && <p className={style.error}>{error}</p>}
-      {success && <p className={style.sucess}>{success}</p>}
       <div ref={bottomref}></div>
     </div>
   );
