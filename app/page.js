@@ -45,7 +45,12 @@ export default function Home() {
         <Header info="Admin" />
       </div>
       <div>
-        <div className={style.background}>
+        {/* display: inline-flex; position: relative; padding: 0 5% 0 5%;
+        justify-content: flex-end; align-items: center; background:
+        linear-gradient( 180deg, rgba(119, 65, 195, 0.5) 0%, rgba(57, 31, 93,
+        0.5) 40.23% ), url("/image.png"); background-position: center;
+        background-size: cover; background-repeat: no-repeat; */}
+        <div className="inline-flex relative px-[5%] justify-end items-center bg-[linear-gradient(180deg,rgba(119,65,195,0.5)0%,rgba(57,31,93,0.5)40.23%),url('/image.png')] bg-center bg-cover bg-no-repeat">
           <Image
             src="/image.png"
             alt=""
@@ -67,9 +72,9 @@ export default function Home() {
                 with your fellow tech enthusiasts
               </h1>
             </div>
-            <div className=" ml-10 mt-1 lg:ml-60 md:ml-25 lg:mt-4 mb-3">
+            <div className=" ml-10 mt-1 lg:ml-60 md:ml-25 lg:mt-4 mb-6 md:mb-3 lg:mb-3">
               <button
-                className="text-xs bg-[#7741c3]  w-[35%] lg:w-[20%]  py-[0.8%] px-0.5 rounded-lg "
+                className="text-xs bg-[#7741c3]  w-[35%] lg:w-[20%]  py-[0.8%] px-0.5 rounded-lg  "
                 onClick={handlescrolltobottom}
               >
                 explore events
@@ -79,7 +84,7 @@ export default function Home() {
         </div>
       </div>
       <div className="text-[#7741c3] text-center font-mono text-xs font-normal justify-center  absolute bg-white place-self-center w-[80%] flex flex-wrap flex-col lg:mt-1  ">
-        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-3 mt-1">
+        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-0  mt-1">
           Available Events
         </h1>
         <h3 className="text-[70%] md:text-[100%] lg:text-[120%] mb-10">

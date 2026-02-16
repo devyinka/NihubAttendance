@@ -12,6 +12,7 @@ import InitialScannerScreen from "@/public/src/components/ScannerPageComponent/I
 import ActiveScannerScreen from "@/public/src/components/ScannerPageComponent/Activescannerscreen";
 
 import style from "./scanner.module.css";
+import ScannerNav from "@/public/src/ScannerNav";
 
 const Scanner = () => {
   const { selectedtrackid, selectedeventid } = useContext(Attendancecontex);
@@ -107,7 +108,8 @@ const Scanner = () => {
   return (
     <div>
       <Header info="Scanner" />
-      <div className={style.container}>
+      <ScannerNav />
+      {/* <div className={style.container}>
         <div className={style.Titleandlogoutcontainer}>
           <div className={style.title}>Admin Dashboard</div>
 
@@ -119,7 +121,7 @@ const Scanner = () => {
         <h4 className={style.subtitle}>
           Manage events, attendance, and sub-admin requests.
         </h4>
-      </div>
+      </div> */}
       {!qrActive ? (
         <InitialScannerScreen onStart={handleSimulate} />
       ) : (
