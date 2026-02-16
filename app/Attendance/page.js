@@ -122,7 +122,7 @@ const Attendance = () => {
 
   return (
     <div>
-      <Header info="Take attendance" />
+      <Header info="Attendance" />
       <AdminDashboardLayout
         role={Role}
         activeButton={button}
