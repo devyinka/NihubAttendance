@@ -26,7 +26,7 @@ export default function ScannerNav() {
         </h1>
         <button
           onClick={handleLogoutClick}
-          className="flex items-center gap-2 text-[#7741C3] text-sm hover:text-purple-700 lg:text-xl"
+          className="flex items-center gap-2 text-[#7741C3] text-sm hover:text-purple-700 lg:text-xl font-bold"
         >
           <Image src="/logout.svg" width={14} height={14} alt="logout" />
           logout
