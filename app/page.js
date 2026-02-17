@@ -80,7 +80,7 @@ export default function Home() {
         </div>
       </div>
       <div className="text-[#7741c3] text-center font-mono text-xs font-normal justify-center  absolute bg-white place-self-center w-[80%] flex flex-wrap flex-col mt-2 lg:mt-2 lg:pt-0   ">
-        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-0 pb-7">
+        <h1 className="text-sm font-bold md:text-2xl lg:text-3xl pt-0 pb-1">
           Available Events
         </h1>
         <h3 className="text-[70%] md:text-[100%] lg:text-[120%] mb-8">
