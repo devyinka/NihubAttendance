@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 export default function ScannerNav() {
+  const router = useRouter();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleLogoutClick = () => {
