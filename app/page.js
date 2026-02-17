@@ -47,7 +47,7 @@ export default function Home() {
       <div>
         <div className="inline-flex relative px-[5%] justify-end items-center bg-[linear-gradient(180deg,rgba(119,65,195,0.5)0%,rgba(57,31,93,0.5)40.23%),url('/image.png')] bg-center bg-cover bg-no-repeat">
           <Image
-            className=" lg:w-400 lg:h-132 h-50"
+            className=" lg:w-400  w-full  h-auto object-cover"
             src="/image.png"
             alt=""
             width={1336}
