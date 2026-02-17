@@ -9,7 +9,7 @@ const EventRegistration = ({ data }) => {
     .map((event) => (
       <div
         key={event._id}
-        className="flex h-full w-44 flex-col rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(55,24,90,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(55,24,90,0.16)] md:w-56 lg:w-72"
+        className="flex h-full w-43 flex-col rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(55,24,90,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(55,24,90,0.16)] md:w-56 lg:w-72"
       >
         <div className="overflow-hidden rounded-xl bg-[#f7f3ff]">
           <Image

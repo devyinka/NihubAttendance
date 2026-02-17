@@ -13,11 +13,6 @@ const Login = () => {
   const API = process.env.NEXT_PUBLIC_API;
   const { Role, setRole } = useContext(Rolecontex);
   const Navigation = useRouter();
-
-  // const handlegoback = () => {
-  //   Cookies.remove("token", { path: "/" });
-  //   Navigation.push("./");
-  // };
   const [Email, setEmail] = useState("nihubeventapp@gmail.com");
   const [subAdminEmail, setsubAdminEmail] = useState("Sub-Admin@gmail.com");
   const [Password, setPassword] = useState("");
@@ -110,7 +105,9 @@ const Login = () => {
       <div className="mx-auto flex min-h-[calc(100vh-50px)] items-center justify-center px-4 py-10">
         <div className="w-full max-w-md rounded-2xl border border-[#7741c3]/30 bg-white/95 p-6 shadow-[0_20px_60px_rgba(55,24,90,0.15)] backdrop-blur">
           <div className="mb-5 text-center">
-            <h2 className="text-lg font-bold text-[#7741c3]">Welcome back</h2>
+            <h2 className="text-lg font-bold text-[#7741c3]">
+              Welcome to Nihub
+            </h2>
             <p className="text-xs text-gray-500">
               Sign in to access the admin dashboard
             </p>

@@ -15,7 +15,6 @@ const AddEvent = () => {
   const API = process.env.NEXT_PUBLIC_API;
   const CLOUDINARY_URL = process.env.NEXT_PUBLIC_CLOUDINARY;
 
-  const Navigation = useRouter();
   const { Role } = useContext(Rolecontex);
   let [button, setbutton] = useState("create"); // to know which button is active
   const [eventname, seteventname] = useState("");
@@ -72,7 +71,6 @@ const AddEvent = () => {
       seteventtracks([...eventtracks, newtrack]);
     }
     settrackname("");
-    settrackabbrvation("");
   };
 
   // to submit the new event to the backend
@@ -137,7 +135,6 @@ const AddEvent = () => {
       seteventstatus(true);
       seteventtracks([]);
       settrackname("");
-      settrackabbrvation("");
       setdropdown(false);
     }
   };
@@ -212,7 +209,7 @@ const AddEvent = () => {
               <label className="ml-2 text-[#7741c3] font-medium font-family-mono text-sm  mb-1">
                 Choose event image
               </label>
-              <div className="border ml-2 border-gray-300 rounded-md  w-[76%] lg:w-[95.5%] bg-[#f3f3f5] py-2 text-[#717182] font-mono pl-2 text-sm">
+              <div className="border ml-2 border-gray-300 rounded-md md:w-[76%]  w-[90%] lg:w-[95.5%] bg-[#f3f3f5] py-2 text-[#717182] font-mono pl-2 text-sm">
                 <input
                   type="file"
                   accept="image/*"
@@ -223,13 +220,13 @@ const AddEvent = () => {
             <div className="flex justify-between mx-4">
               <button
                 type="button"
-                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
+                className="bg-[#7741c3] text-white px-2 py-1 lg:py-2 lg:px-4 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
                 onClick={handledropdown}
               >
                 create track
               </button>
               <button
-                className="bg-[#7741c3] text-white px-4 py-2 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
+                className="bg-[#7741c3] text-white px-2 py-1 lg:py-2 lg:px-4 rounded-md hover:bg-[#5e2a9e] transition-colors duration-300"
                 type="submit"
               >
                 {!loading ? "Create Event" : "please wait.."}
