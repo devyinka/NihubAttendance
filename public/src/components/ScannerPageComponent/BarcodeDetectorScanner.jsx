@@ -8,7 +8,6 @@ const BarcodeDetectorScanner = ({ active, onScan, onError, onFallbackToLegacy })
   const detectorRef = useRef(null);
   const animationFrameRef = useRef(null);
   const callbacksRef = useRef({ onScan, onError });
-  const [status, setStatus] = useState("Preparing native scanner...");
 
   useEffect(() => {
     callbacksRef.current = { onScan, onError };
@@ -45,7 +44,6 @@ const BarcodeDetectorScanner = ({ active, onScan, onError, onFallbackToLegacy })
       }
 
       try {
-        setStatus("Starting camera...");
 
         const supportedFormats =
           typeof window.BarcodeDetector.getSupportedFormats === "function"
@@ -81,7 +79,6 @@ const BarcodeDetectorScanner = ({ active, onScan, onError, onFallbackToLegacy })
 
         video.srcObject = stream;
         await video.play();
-        setStatus("Scanning for barcode...");
 
         const scanFrame = async () => {
           if (cancelled || !videoRef.current || !detectorRef.current) {
@@ -145,7 +142,7 @@ const BarcodeDetectorScanner = ({ active, onScan, onError, onFallbackToLegacy })
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute left-3 top-3 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white">
-        {status}
+        Scanning...
       </div>
     </div>
   );
