@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useContext, useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Html5Qrcode } from "html5-qrcode";
 import { useMarkAttendance } from "@/app/hooks/useAttendance";
 
 import Header from "@/public/src/components/AdminLoginpageComponents/header";
@@ -19,7 +17,9 @@ const Scanner = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [scannerError, setScannerError] = useState("");
   const [qrActive, setQrActive] = useState(false);
+  const [scannerMode, setScannerMode] = useState("native");
 
   const [studentInfo, setStudentInfo] = useState({
     student_name: "",
@@ -39,12 +39,20 @@ const Scanner = () => {
 
   const handleSimulate = () => {
     resetStatus();
+    setScannerError("");
     setQrActive(true);
   };
 
   const handleGoBack = () => {
     resetStatus();
+    setScannerError("");
     setQrActive(false);
+  };
+
+  const handleScannerModeChange = (mode) => {
+    resetStatus();
+    setScannerError("");
+    setScannerMode(mode);
   };
 
   const resetStatus = () => {
@@ -52,10 +60,15 @@ const Scanner = () => {
     setError("");
   };
 
+  const handleScannerError = (messageText) => {
+    setScannerError(messageText);
+  };
+
   const handleScan = async (decodedText) => {
     if (loading) return;
 
     resetStatus();
+    setScannerError("");
 
     try {
       const response = await markAttendanceMutation.mutateAsync({
@@ -77,34 +90,6 @@ const Scanner = () => {
     }
   };
 
-  useEffect(() => {
-    if (!qrActive) return;
-
-    const scanner = new Html5Qrcode("qr-reader");
-
-    scanner
-      .start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        (decodedText) => {
-          scanner.stop();
-          handleScan(decodedText);
-        },
-      )
-      .catch((err) => {
-        setError("Unable to start camera: " + err?.message);
-      });
-
-    return () => {
-      try {
-        // Cleanup on unmount
-        if (scanner._state !== 3) {
-          scanner.stop();
-        }
-      } catch (_) {}
-    };
-  }, [qrActive]);
-
   return (
     <div>
       <Header info="Scanner" />
@@ -118,6 +103,11 @@ const Scanner = () => {
           loading={loading}
           studentInfo={studentInfo}
           onClear={handleGoBack}
+          scannerMode={scannerMode}
+          onScannerModeChange={handleScannerModeChange}
+          onScan={handleScan}
+          scannerError={scannerError}
+          onScannerError={handleScannerError}
         />
       )}
     </div>

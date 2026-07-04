@@ -7,10 +7,10 @@ const InitialScannerScreen = ({ onStart }) => (
           <Image src="/scanner.svg" width={20} height={20} alt="scanner icon" />
         </div>
         <h2 className="text-[#7741c3] text-center font-bold text-0.5xl mt-2 font-family: Arial">
-          Scan Student QR Code
+          Scan Student Code
         </h2>
         <h2 className="text-gray-700 text-center font-normal text-sm mt-2 font-family: Arial mb-2">
-          Position the QR code within the frame to mark attendance
+          Position the code within the frame to mark attendance
         </h2>
         <div className="w-50 max-h-70 bg-gray-200 mb-4 rounded-lg p-1  items-center justify-center">
           <Image
