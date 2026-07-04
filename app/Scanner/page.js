@@ -40,19 +40,21 @@ const Scanner = () => {
   const handleSimulate = () => {
     resetStatus();
     setScannerError("");
+    setScannerMode("native");
     setQrActive(true);
   };
 
   const handleGoBack = () => {
     resetStatus();
     setScannerError("");
+    setScannerMode("native");
     setQrActive(false);
   };
 
-  const handleScannerModeChange = (mode) => {
+  const handleNativeFallback = () => {
     resetStatus();
     setScannerError("");
-    setScannerMode(mode);
+    setScannerMode("legacy");
   };
 
   const resetStatus = () => {
@@ -104,10 +106,10 @@ const Scanner = () => {
           studentInfo={studentInfo}
           onClear={handleGoBack}
           scannerMode={scannerMode}
-          onScannerModeChange={handleScannerModeChange}
           onScan={handleScan}
           scannerError={scannerError}
           onScannerError={handleScannerError}
+          onNativeFallback={handleNativeFallback}
         />
       )}
     </div>

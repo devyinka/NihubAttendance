@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const BarcodeDetectorScanner = ({ active, onScan, onError }) => {
+const BarcodeDetectorScanner = ({ active, onScan, onError, onFallbackToLegacy }) => {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const detectorRef = useRef(null);
@@ -39,9 +39,8 @@ const BarcodeDetectorScanner = ({ active, onScan, onError }) => {
 
     const startScanner = async () => {
       if (typeof window === "undefined" || !("BarcodeDetector" in window)) {
-        callbacksRef.current.onError(
-          "BarcodeDetector is not supported in this browser. Switch to the legacy scanner.",
-        );
+        await stopScanner();
+        onFallbackToLegacy?.();
         return;
       }
 
@@ -118,11 +117,7 @@ const BarcodeDetectorScanner = ({ active, onScan, onError }) => {
       } catch (error) {
         await stopScanner();
         if (!cancelled) {
-          callbacksRef.current.onError(
-            error?.message
-              ? `Unable to start camera: ${error.message}`
-              : "Unable to start camera.",
-          );
+          onFallbackToLegacy?.();
         }
       }
     };
@@ -141,13 +136,13 @@ const BarcodeDetectorScanner = ({ active, onScan, onError }) => {
   }
 
   return (
-    <div className="relative min-h-[260px] overflow-hidden rounded-lg bg-gray-100">
+    <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-100">
       <video
         ref={videoRef}
         autoPlay
         muted
         playsInline
-        className="h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute left-3 top-3 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white">
         {status}
